@@ -2,7 +2,8 @@
     "name": "acer/skillbox-cms.loc",
     "require": {
         "illuminate/database": "^6.3",
-        "kalnoy/nestedset": "^5.0"
+        "kalnoy/nestedset": "^5.0",
+        "vlucas/valitron": "^1.4"
     },
     "autoload": {
         "psr-4": {"App\\": "src/"}

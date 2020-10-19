@@ -1,4 +1,7 @@
+<script type="text/javascript" src="/static/js/vendors.eecba209b5f19e39d646.js"></script>
+<script type="text/javascript" src="/static/js/app.9e135fdaea1c28d605c7.js"></script>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+
+
 </body>
 </html>

@@ -3,21 +3,43 @@
 namespace App;
 
 use App\Traits\TSingleton;
+use Valitron\Validator;
 
 class Request
 {
-    use TSingleton;
-
-    protected static array $request;
-
+    /**
+     * Возвращает значение из массива запроса или же сам массив если ключ отсутсвует.
+     * Если массив не существует возвращет false
+     * @param string $name
+     * @param array $args
+     * @return bool|mixed|null
+     */
     public static function __callStatic(string $name, array $args)
     {
-        if(empty(self::$request)){
-            self::$request = self::prepareData($_REQUEST);
+        $key = '_' . strtoupper($name);
+        if (array_key_exists($key, $GLOBALS)) {
+            $arr = self::prepareData($GLOBALS[$key]);
+            $key = $args[0] ?? '';
+            return arrayGet($arr, $key, $arr);
         }
-        return arrayGet(self::$request, $args[0]);
+        return false;
     }
 
+    /**
+     * Возвращает обьект валидатора
+     * @param $data данные для валидации
+     * @return Validator
+     */
+    public static function createValidator($data)
+    {
+        return new Validator($data);
+    }
+
+    /**
+     * Подготавливает данные от иньекции
+     * @param $data
+     * @return array|string
+     */
     private static function prepareData($data)
     {
         if (is_array($data)) {
@@ -27,7 +49,7 @@ class Request
             }
             return $preparedArray;
         }
-        return mysqli_escape_string(htmlspecialchars(strip_tags($data)));
+        return trim(htmlspecialchars($data, ENT_QUOTES));
     }
 
 

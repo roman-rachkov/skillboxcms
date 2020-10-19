@@ -47,7 +47,7 @@ function dd($var, $explode = false)
 function printDebug()
 {
     if (DEBUG && !empty($_SESSION['debug'])) :?>
-        <div class="debug container">
+        <div class="debug container" style="margin-top: 20px;">
             <?php foreach ($_SESSION['debug'] as $key => $debug) : ?>
                 <?= $debug ?>
             <?php endforeach; ?>
@@ -116,4 +116,24 @@ function includeView($templateName, $data = [])
  */
 function redirect(string $path = '/'){
     header('Location: '.$path, true, 302);
+}
+
+
+function travers($categories, $prefix = '-'){
+    foreach ($categories as $category){
+        echo nl2br(PHP_EOL.$prefix.' '.$category->name);
+        travers($category->children, $prefix.'-');
+    }
+}
+
+/**
+ * Выводит сообщение об ошибки заполнения поля
+ * @param $errors
+ */
+function printInputErrors($errors){
+    echo '<ul class="red-text text-darken-2">';
+    foreach ($errors as $error){
+        echo '<li>'.$error.'</li>';
+    }
+    echo '</ul>';
 }

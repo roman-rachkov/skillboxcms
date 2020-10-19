@@ -1,13 +1,12 @@
-<!doctype html>
-<html lang="en">
+<!DOCTYPE html>
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title><?=$title?></title>
+    <title><?= $title ?? 'SkillboxCMS'?></title>
+    <meta name="description" content="Empty webpack pug and vue template">
+    <meta name="keywords" content="babel 7, html, pug, css, scss, js, javascript, npm, node.js, webpack, vue, vuex">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <link href="/static/css/vendors.ca1568ea7eacd55b78dd.css" rel="stylesheet">
+    <link href="/static/css/app.8dfe42294b001f2c17a2.css" rel="stylesheet">
 </head>
-<body>
-
-
