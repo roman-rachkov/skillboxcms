@@ -114,26 +114,72 @@ function includeView($templateName, $data = [])
  * Выполняет перенаправление по указанному адресу
  * @param string $path
  */
-function redirect(string $path = '/'){
+function redirect(string $path = '/')
+{
     header('Location: '.$path, true, 302);
 }
 
-
-function travers($categories, $prefix = '-'){
-    foreach ($categories as $category){
-        echo nl2br(PHP_EOL.$prefix.' '.$category->name);
-        travers($category->children, $prefix.'-');
-    }
+/**
+ * Проверяет вышло ли время сессии и если это так пересоздает ее и отправляет пользователя на авторизацию
+ * @param int $timeout время жизни сесси в секундах
+ */
+function startSession($timeout = 1200)
+{
+    $params = [
+        'name' => 'session_id',
+        'cookie_lifetime' => $timeout,
+        'gc_maxlifetime' => $timeout,
+    ];
+    session_start($params);
+    setcookie(session_name(), session_id(), time() + $timeout, '/');
 }
 
 /**
  * Выводит сообщение об ошибки заполнения поля
  * @param $errors
  */
-function printInputErrors($errors){
+function printInputErrors($errors)
+{
     echo '<ul class="red-text text-darken-2">';
-    foreach ($errors as $error){
+    foreach ($errors as $error) {
         echo '<li>'.$error.'</li>';
     }
     echo '</ul>';
+}
+
+/**
+ * Длбавляет ошибкуи в массив сессии для последующего вывода
+ * @param $error
+ */
+function setError($error){
+    $_SESSION['errors'][] = $error;
+}
+
+/**
+ * Выводит массив с ошибками и очищает массив
+ */
+function printErrors(){
+    if(!empty($_SESSION['errors'])) {
+        echo '<div class="errors"><ul>';
+        foreach ($_SESSION['errors'] as $error){
+            echo '<li>'.$error.'</li>';
+        }
+        echo '</ul></div>';
+        unset($_SESSION['errors']);
+    }
+}
+
+function setSuccess($success){
+    $_SESSION['success'][] = $success;
+}
+
+function printSuccess(){
+    if(!empty($_SESSION['success'])) {
+        echo '<div class="success"><ul>';
+        foreach ($_SESSION['success'] as $item){
+            echo '<li>'.$item.'</li>';
+        }
+        echo '</ul></div>';
+        unset($_SESSION['item']);
+    }
 }

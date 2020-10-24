@@ -51,6 +51,4 @@ class Request
         }
         return trim(htmlspecialchars($data, ENT_QUOTES));
     }
-
-
 }

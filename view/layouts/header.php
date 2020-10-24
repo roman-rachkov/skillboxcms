@@ -13,21 +13,17 @@
                         <li class="menu__item"><a href="/">Страница 2</a></li>
                         <li class="menu__item"><a href="/">Страница 3</a></li>
                         <li class="menu__item"><a href="/">Страница 4</a></li>
+                        <?= isset($_SESSION['user']) && $_SESSION['user']->canDo('view_admin') ? '<li class="menu__item"><a href="/admin">Админка</a></li>
+' : ''?>
                     </ul>
-                    <div class="user"><p>Привет, Гость!</p>
-                        <p><a class="light-blue-text text-accent-4" href="#">Войти</a> или<a
-                                class="light-blue-text text-accent-4" href="/registration"> Зарегистрироваться</a>!
-                        </p></div>
+                    <?php includeView('layouts/user-login');?>
                 </div>
             </div>
         </nav>
     </div>
 </header>
 <div class="sidenav" id="mobile">
-    <div class="user"><p>Привет, Гость!</p>
-        <p><a class="light-blue-text text-accent-4" href="#">Войти</a> или<a class="light-blue-text text-accent-4"
-                                                                             href="/registration">
-                Зарегистрироваться</a>!</p></div>
+    <?php includeView('layouts/user-login');?>
     <ul class="menu">
         <li class="menu__item menu__item_active"><a href="/">Главная</a></li>
         <li class="menu__item"><a href="/">Страница 1</a></li>

@@ -21,8 +21,12 @@ class Category extends Model
         'parent_id'
     ];
 
-    public function subCategories(){
+    public function subCategories()
+    {
         return $this->hasMany('App\Model\Category', 'parent_id');
     }
 
+    public function articles(){
+        return $this->belongsToMany('App\Model\Post', 'article_category');
+    }
 }

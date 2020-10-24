@@ -8,5 +8,4 @@ use App\Request;
 class BaseController
 {
 
-
 }
