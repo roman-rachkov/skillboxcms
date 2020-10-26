@@ -3,6 +3,7 @@
 namespace App;
 
 use App\View\Renderable;
+use App\View\View;
 use Illuminate\Database\Capsule\Manager as Capsule;
 
 class Application

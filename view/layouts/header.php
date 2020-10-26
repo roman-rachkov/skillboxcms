@@ -33,3 +33,4 @@
     </ul>
 </div>
 <div class="content-wrapper">
+    <div class="container">

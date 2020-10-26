@@ -1,6 +1,4 @@
 <?php includeView('layouts/header', compact('title')); ?>
-    <section>
-        <div class="container">
             <h1>Вход</h1>
             <div class="row">
                 <form class="login-form col s12" action="#" method="post">
@@ -30,6 +28,4 @@
                     </div>
                 </form>
             </div>
-        </div>
-    </section>
 <?php includeView('layouts/footer'); ?>

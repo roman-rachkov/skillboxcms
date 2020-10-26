@@ -8,7 +8,10 @@ require_once 'bootstrap.php';
 $router = new \App\Router();
 
 $router->get('/admin', function () {
-    return new App\View\View('admin/post-list', ['title' => "Список постов", 'pageClass' => 'admin', ]);
+    if(!isset($_SESSION['user']) || !$_SESSION['user']->canDo('view_admin')){
+        throw new \App\Exception\AccessDeniedException('Доступ запрещен!');
+    }
+    return new App\View\View('admin/post-list', ['title' => "Список постов", 'pageClass' => 'admin', 'pageClass' => 'admin']);
 });
 
 $router->post('/registration', 'App\Controller\User@registration');

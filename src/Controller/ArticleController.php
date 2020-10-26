@@ -5,6 +5,8 @@ namespace App\Controller;
 
 class ArticleController extends BaseController
 {
+
+
     public function indexAction()
     {
 
