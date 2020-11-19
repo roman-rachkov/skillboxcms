@@ -23,7 +23,6 @@
 <div class="sidenav" id="mobile">
     <?php includeView('layouts/user-login'); ?>
     <?php includeView('layouts/menu'); ?>
-    <?php includeView('layouts/admin-menu'); ?>
 </div>
 <div class="content-wrapper">
     <div class="container">

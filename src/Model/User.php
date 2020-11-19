@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class User extends Model
 {
-    protected $fillable = ['email', 'passwprd', 'username'];
+    protected $fillable = ['email', 'password', 'username'];
 
     public function roles()
     {
@@ -38,7 +38,6 @@ class User extends Model
             return true;
         } else {
             foreach ($this->roles as $role) {
-                debug($role);
                 foreach ($role->permissions as $perm) {
                     if (strtolower($perm->key) === strtolower($permission)) {
                         return true;

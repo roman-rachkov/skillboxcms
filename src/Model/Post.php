@@ -8,16 +8,22 @@ use Illuminate\Database\Eloquent\Model;
 
 class Post extends Model
 {
-    protected $fillable =[
+//    protected $table = 'articles';
+
+    protected $fillable = [
         'title',
         'text',
+        'img_src',
+        'type'
     ];
 
-    public function author(){
-        return $this->hasOne('App\Model\User');
+    public function user()
+    {
+        return $this->belongsTo('App\Model\User');
     }
 
-    public function categories(){
-        return $this->belongsToMany('App\Model\Category', 'article_category');
+    public function categories()
+    {
+        return $this->belongsToMany('App\Model\Category');
     }
 }

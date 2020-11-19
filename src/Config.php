@@ -8,18 +8,14 @@
 
 namespace App;
 
+use App\Traits\TSingleton;
+
 class Config
 {
-    private static $instance = null;
-    private $configs = [];
 
-    public static function getInstance()
-    {
-        if (null === static::$instance) {
-            static::$instance = new static();
-        }
-        return self::$instance;
-    }
+    use TSingleton;
+
+    private $configs = [];
 
     private function __construct()
     {
@@ -36,11 +32,4 @@ class Config
         return arrayGet($this->configs, $config, $default);
     }
 
-    private function __clone()
-    {
-    }
-
-    private function __wakeup()
-    {
-    }
 }

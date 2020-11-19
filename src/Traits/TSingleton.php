@@ -14,12 +14,11 @@ trait TSingleton
     {
     }
 
-    public function __wakeup()
+    protected function __wakeup()
     {
-        throw new \Exception("Синглтон не должен быть востанавливаем");
     }
 
-    public static function getInstance() : TSingleton
+    public static function getInstance()
     {
         if (!isset(self::$instance)) {
             self::$instance = new static();

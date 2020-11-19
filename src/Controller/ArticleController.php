@@ -3,18 +3,12 @@
 
 namespace App\Controller;
 
+use App\Model\Post;
+use App\Model\User;
+use App\View\View;
+
 class ArticleController extends BaseController
 {
 
 
-    public function indexAction()
-    {
-
-        includeView("index");
-    }
-
-    public function singleAction(int $id)
-    {
-        echo "Single: " . $id;
-    }
 }

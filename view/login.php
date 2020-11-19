@@ -24,7 +24,7 @@
                         <?php isset($errors['password']) ? printInputErrors($errors['password']) : '' ?>
                     </div>
                     <div class="input-field right">
-                        <button class="btn waves-effect waves-light" type="submit">Зарегистрироваться</button>
+                        <button class="btn waves-effect waves-light" type="submit">Войти</button>
                     </div>
                 </form>
             </div>

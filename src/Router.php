@@ -91,4 +91,13 @@ class Router
     {
         return '/' . trim(parse_url(self::getUri(), PHP_URL_PATH), '/');
     }
+
+    /**
+     * Проверяет совпадет ли путь
+     * @param string $path
+     * @return bool
+     */
+    public static function  checkPath(string $path){
+        return self::getPath() === $path;
+    }
 }

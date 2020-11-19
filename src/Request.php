@@ -3,7 +3,6 @@
 namespace App;
 
 use App\Traits\TSingleton;
-use Valitron\Validator;
 
 class Request
 {
@@ -25,15 +24,7 @@ class Request
         return false;
     }
 
-    /**
-     * Возвращает обьект валидатора
-     * @param $data данные для валидации
-     * @return Validator
-     */
-    public static function createValidator($data)
-    {
-        return new Validator($data);
-    }
+
 
     /**
      * Подготавливает данные от иньекции

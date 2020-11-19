@@ -2,22 +2,36 @@
 
 namespace App;
 
+use App\Traits\TSingleton;
 use App\View\Renderable;
 use App\View\View;
 use Illuminate\Database\Capsule\Manager as Capsule;
 
 class Application
 {
-    protected $router;
+    use TSingleton;
 
-    public function __construct(Router $router)
+    protected Router $router;
+
+    /**
+     * @return Router
+     */
+    public function getRouter()
+    {
+        return $this->router;
+    }
+
+    /**
+     * @param Router $router
+     */
+    public function setRouter(Router $router)
     {
         $this->router = $router;
-        $this->Initialize();
     }
 
     public function run()
     {
+        $this->Initialize();
         try {
             $data = $this->router->dispatch();
 

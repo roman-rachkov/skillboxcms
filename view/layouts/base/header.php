@@ -2,7 +2,7 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <title><?= $title ?? 'SkillboxCMS'?></title>
+    <title><?= $title.' - SkillBoxCMS' ?? 'SkillBoxCMS'?></title>
     <meta name="description" content="Empty webpack pug and vue template">
     <meta name="keywords" content="babel 7, html, pug, css, scss, js, javascript, npm, node.js, webpack, vue, vuex">
     <meta name="viewport" content="width=device-width, initial-scale=1">

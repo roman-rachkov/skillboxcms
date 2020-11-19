@@ -7,30 +7,16 @@
                                                                                       data-target="mobile"><i
                         class="material-icons">menu</i></a>
                 <div class="hide-on-med-and-down" id="top-menu">
-                    <ul class="menu">
-                        <li class="menu__item menu__item_active"><a href="/">Главная</a></li>
-                        <li class="menu__item"><a href="/">Страница 1</a></li>
-                        <li class="menu__item"><a href="/">Страница 2</a></li>
-                        <li class="menu__item"><a href="/">Страница 3</a></li>
-                        <li class="menu__item"><a href="/">Страница 4</a></li>
-                        <?= isset($_SESSION['user']) && $_SESSION['user']->canDo('view_admin') ? '<li class="menu__item"><a href="/admin">Админка</a></li>
-' : ''?>
-                    </ul>
-                    <?php includeView('layouts/user-login');?>
+                    <?php includeView('layouts/menu'); ?>
+                    <?php includeView('layouts/user-login'); ?>
                 </div>
             </div>
         </nav>
     </div>
 </header>
 <div class="sidenav" id="mobile">
-    <?php includeView('layouts/user-login');?>
-    <ul class="menu">
-        <li class="menu__item menu__item_active"><a href="/">Главная</a></li>
-        <li class="menu__item"><a href="/">Страница 1</a></li>
-        <li class="menu__item"><a href="/">Страница 2</a></li>
-        <li class="menu__item"><a href="/">Страница 3</a></li>
-        <li class="menu__item"><a href="/">Страница 4</a></li>
-    </ul>
+    <?php includeView('layouts/user-login'); ?>
+    <?php includeView('layouts/menu'); ?>
 </div>
 <div class="content-wrapper">
     <div class="container">
