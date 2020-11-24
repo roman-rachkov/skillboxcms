@@ -1,4 +1,4 @@
 <?php
 return[
-    'result_per_page' => '20',
+    'result_per_page' => '10',
 ];

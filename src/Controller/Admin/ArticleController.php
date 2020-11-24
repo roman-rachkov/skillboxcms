@@ -2,24 +2,34 @@
 
 namespace App\Controller\Admin;
 
+use App\Config;
 use App\Exception\AccessDeniedException;
 use App\Exception\NotFoundException;
 use App\Model\Post;
-use App\Model\User;
 use App\Request;
+use App\Settings;
 use App\Validators\ArticleValidator;
 use App\View\View;
-use Upload\File;
-use Upload\Storage\FileSystem;
-use Upload\Validation\Mimetype;
-use Upload\Validation\Size;
 
 class ArticleController extends BaseController
 {
 
     public function indexAction()
     {
+        if (!isset($_SESSION['user']) || !$_SESSION['user']->canDo('view_admin')) {
+            throw new AccessDeniedException('Доступ запрещен!');
+        }
 
+        $paginate = Request::get('perpage');
+        $paginate = is_array($paginate) ? Settings::getInstance()->get('result_per_page',
+            Config::getInstance()->get('default.result_per_page')) : $paginate;
+
+        return new View('admin/post-list',
+            [
+                'title' => "Список постов",
+                'pageClass' => 'admin',
+                'articles' => Post::where('type', 'post')->paginate($paginate, ['*'], 'page', Request::get('page'))->setPath('/admin')
+            ]);
     }
 
     public function editAction()
@@ -33,9 +43,9 @@ class ArticleController extends BaseController
         if(!$article){
             throw new NotFoundException('Статья не найдена');
         }
-        $validator = new ArticleValidator();
+        $validator = new ArticleValidator($post);
 
-        if ($validator->validate($post)) {
+        if ($validator->validate()) {
 
             $article->title = $post['title'];
             $article->text = $post['text'];
@@ -65,9 +75,9 @@ class ArticleController extends BaseController
 
         $post = Request::post();
 
-        $validator = new ArticleValidator();
+        $validator = new ArticleValidator($post);
 
-        if ($validator->validate($post)) {
+        if ($validator->validate()) {
             $article = new Post();
             $article->title = $post['title'];
             $article->text = $post['text'];
@@ -75,7 +85,6 @@ class ArticleController extends BaseController
 
             $image = tryToUploadFile('image', 'articles');
             if ($image) {
-
                 $article->img_src = DIRECTORY_SEPARATOR.'articles'.DIRECTORY_SEPARATOR.$image['name'];
             }
             if ($_SESSION['user']->articles()->save($article)) {

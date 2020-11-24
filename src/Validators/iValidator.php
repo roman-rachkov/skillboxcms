@@ -5,6 +5,6 @@ namespace App\Validators;
 
 interface iValidator
 {
-    public function validate(array $data);
+    public function validate();
     public function errors();
 }

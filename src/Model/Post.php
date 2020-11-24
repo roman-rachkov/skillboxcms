@@ -4,10 +4,12 @@
 namespace App\Model;
 
 
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Model;
 
 class Post extends Model
 {
+
 //    protected $table = 'articles';
 
     protected $fillable = [

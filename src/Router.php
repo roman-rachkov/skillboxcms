@@ -100,4 +100,14 @@ class Router
     public static function  checkPath(string $path){
         return self::getPath() === $path;
     }
+
+    public static function buildQueryString(array $newParams){
+        $getArr = Request::get();
+
+        $getArr = array_merge($getArr, $newParams);
+
+        $query = http_build_query($getArr);
+
+        return self::getPath().'?'.$query;
+    }
 }

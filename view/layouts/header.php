@@ -2,15 +2,23 @@
 <body class="<?= $pageClass ?? 'index' ?>-page">
 <header>
     <div class="container">
-        <nav>
-            <div class="nav-wrapper"><a class="brand-logo" href="/">SkillBoxCMS</a><a class="sidenav-trigger" href="#"
-                                                                                      data-target="mobile"><i
-                        class="material-icons">menu</i></a>
+        <nav class="nav-extended">
+            <div class="nav-wrapper">
+                <a class="brand-logo" href="/">SkillBoxCMS</a>
+                <a class="sidenav-trigger" href="#" data-target="mobile">
+                    <i class="material-icons">menu</i>
+                </a>
                 <div class="hide-on-med-and-down" id="top-menu">
                     <?php includeView('layouts/menu'); ?>
                     <?php includeView('layouts/user-login'); ?>
+
                 </div>
             </div>
+            <?php if (isset($_SESSION['user']) && $_SESSION['user']->canDo('view_admin')): ?>
+                <div class="nav-content">
+                    <?php includeView('layouts/admin-menu'); ?>
+                </div>
+            <?php endif; ?>
         </nav>
     </div>
 </header>
@@ -18,5 +26,10 @@
     <?php includeView('layouts/user-login'); ?>
     <?php includeView('layouts/menu'); ?>
 </div>
+
+<div class="container">
+    <?php printErrors(); printSuccess();?>
+</div>
+
 <div class="content-wrapper">
     <div class="container">

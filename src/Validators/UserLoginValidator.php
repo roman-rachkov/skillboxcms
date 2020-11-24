@@ -11,12 +11,15 @@ class UserLoginValidator implements iValidator
 {
     protected Validator $validator;
 
-    public function validate(array $data)
+    public function __construct(array $data)
     {
         $this->validator = new Validator($data);
 
-        $user = null;
+    }
 
+    public function validate()
+    {
+        $user = null;
         $this->validator->rule('required', ['email', 'password'])->message('Поле должно быть заполнено');
         $this->validator->rule('email', 'email')->message('Введите валидный Email');
         $this->validator->rule(function ($field, $value, $params, $fields) use (&$user) {

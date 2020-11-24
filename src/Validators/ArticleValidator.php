@@ -10,9 +10,14 @@ class ArticleValidator implements iValidator
 {
     protected Validator $validator;
 
-    public function validate(array $data)
+
+    public function __construct(array $data)
     {
         $this->validator = new Validator($data);
+    }
+
+    public function validate()
+    {
         $this->validator->rule('required', ['title', 'text'])->message('Поле не может быть пустым');
         return $this->validator->validate();
     }

@@ -12,15 +12,18 @@ class UserRegisterValidator implements iValidator
 
     protected Validator $validator;
 
-    public function validate(array $data)
+    public function __construct(array $data)
     {
-        debug($data);
         $this->validator = new Validator($data);
 
+    }
+
+    public function validate()
+    {
         $this->validator->rule('required', ['username', 'email', 'password', 'confirm_password'])->message('Поле должно быть заполнено');
         $this->validator->rule('email', 'email')->message('Введите валидный Email');
         $this->validator->rule(function ($field, $value, $params, $fields) {
-            if (User::where('email', $value)->first()) {
+            if (User::where('email', $value)->whereNotNull('username')->first()) {
                 return false;
             } else {
                 return true;

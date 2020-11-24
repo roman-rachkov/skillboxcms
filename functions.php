@@ -188,7 +188,7 @@ function setError($error)
 function printErrors()
 {
     if (!empty($_SESSION['errors'])) {
-        echo '<div class="errors"><ul>';
+        echo '<div class="errors card-panel red accent-1 black-text"><ul>';
         foreach ($_SESSION['errors'] as $error) {
             echo '<li>' . $error . '</li>';
         }
@@ -197,20 +197,27 @@ function printErrors()
     }
 }
 
+/**
+ * Устаналивает сообщение об успехе
+ * @param $success
+ */
 function setSuccess($success)
 {
     $_SESSION['success'][] = $success;
 }
 
+/**
+ * Выводит массив с успешными действиями и очищает его
+ */
 function printSuccess()
 {
     if (!empty($_SESSION['success'])) {
-        echo '<div class="success"><ul>';
+        echo '<div class="success card-panel green accent-2 black-text"><ul>';
         foreach ($_SESSION['success'] as $item) {
             echo '<li>' . $item . '</li>';
         }
         echo '</ul></div>';
-        unset($_SESSION['item']);
+        unset($_SESSION['success']);
     }
 }
 
@@ -256,3 +263,45 @@ function tryToUploadFile(string $key, string $path, array $mimetypes = ['image/p
         return false;
     }
 }
+
+function printPagination(\Illuminate\Contracts\Pagination\LengthAwarePaginator $paginator)
+{
+
+    if ($paginator->hasPages()) {
+    $html = '<ul class="pagination">';
+    if ($paginator->currentPage() == 1) {
+        $html .= "<li class='disabled'><a ><i class='material-icons'>chevron_left</i></a></li>";
+    } else {
+        $html .= "<li><a href='" . \App\Router::buildQueryString(['page' => $paginator->currentPage() - 1]) . "'><i class='material-icons'>chevron_left</i></a></li>";
+    }
+
+    if ($paginator->currentPage() - 2 > 0) {
+        $html .= "<li><a href='" . \App\Router::buildQueryString(['page' => $paginator->currentPage() - 2]) . "'>".($paginator->currentPage()-2)."</a></li>";
+    }
+    if ($paginator->currentPage() - 1 > 0) {
+        $html .= "<li><a href='" . \App\Router::buildQueryString(['page' => $paginator->currentPage() - 1]) . "'>" . ($paginator->currentPage() - 1)."</a></li>";
+    }
+
+    $html .= "<li class='active'><a>{$paginator->currentPage()}</a></li>";
+
+    if ($paginator->currentPage() + 1 <= $paginator->lastPage()) {
+        $html .= "<li><a href='" . \App\Router::buildQueryString(['page' => $paginator->currentPage() + 1]) . "'>" . ($paginator->currentPage() + 1) . "</a></li>";
+    }
+
+    if ($paginator->currentPage() + 2 <= $paginator->lastPage()) {
+        $html .= "<li><a href='" . \App\Router::buildQueryString(['page' => $paginator->currentPage() + 2]) . "'>" . ($paginator->currentPage() + 2) . "</a></li>";
+    }
+
+    if (!$paginator->hasMorePages()) {
+        $html .= "<li class='disabled'><a ><i class='material-icons'>chevron_right</i></a></li>";
+    } else {
+        $html .= "<li><a href='" . \App\Router::buildQueryString(['page' => $paginator->currentPage() + 1]) . "'><i class='material-icons'>chevron_right</i></a></li>";
+    }
+    $html .= '</ul>';
+
+    echo $html;
+}
+
+}
+
+?>

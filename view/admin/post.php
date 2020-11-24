@@ -1,4 +1,4 @@
-<?php includeView('/layouts/admin_header', ['title' => $title, 'pageClass' => $pageClass]); ?>
+<?php includeView('/layouts/header', ['title' => $title, 'pageClass' => $pageClass]); ?>
     <H1 class="center-align"><?= $title ?></H1>
     <div class="row">
         <form class="col s12" <?= isset($article) ? 'action="/admin/edit"' : 'action="/admin/new"' ?> method="post"
