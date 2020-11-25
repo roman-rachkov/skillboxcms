@@ -10,20 +10,20 @@
                 </a>
                 <div class="hide-on-med-and-down" id="top-menu">
                     <?php includeView('layouts/menu'); ?>
-                    <?php includeView('layouts/user-login'); ?>
+                    <?php includeView('layouts/user_login'); ?>
 
                 </div>
             </div>
             <?php if (isset($_SESSION['user']) && $_SESSION['user']->canDo('view_admin')): ?>
                 <div class="nav-content">
-                    <?php includeView('layouts/admin-menu'); ?>
+                    <?php includeView('layouts/admin_menu'); ?>
                 </div>
             <?php endif; ?>
         </nav>
     </div>
 </header>
 <div class="sidenav" id="mobile">
-    <?php includeView('layouts/user-login'); ?>
+    <?php includeView('layouts/user_login'); ?>
     <?php includeView('layouts/menu'); ?>
 </div>
 

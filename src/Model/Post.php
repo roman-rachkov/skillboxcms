@@ -4,11 +4,17 @@
 namespace App\Model;
 
 
+use App\Config;
+use App\Request;
+use App\Settings;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Post extends Model
 {
+
+    use SoftDeletes;
 
 //    protected $table = 'articles';
 
@@ -28,4 +34,13 @@ class Post extends Model
     {
         return $this->belongsToMany('App\Model\Category');
     }
+
+    public function getPerPage()
+    {
+        $paginate = Request::get('perpage');
+        $paginate = is_array($paginate) ? Settings::getInstance()->get('result_per_page',
+            Config::getInstance()->get('default.result_per_page')) : $paginate;
+        return $paginate;
+    }
+
 }

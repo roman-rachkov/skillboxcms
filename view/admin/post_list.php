@@ -5,20 +5,7 @@
             <div class="row">
                 <a href="/admin/new" class="btn waves-effect waves-light col s10 offset-s1">Новый пост</a>
             </div>
-            <?php if ($articles->hasPages()): ?>
-                <div class="row">
-                    <div class="input-field col s10 offset-s1" >
-                        <select name="perpage">
-                            <option value="10">10</option>
-                            <option value="20">20</option>
-                            <option value="50">50</option>
-                            <option value="200">200</option>
-                            <option value="0">Все</option>
-                        </select>
-                        <label>Записей на странице</label>
-                    </div>
-                </div>
-            <?php endif; ?>
+            <?php includeView('layouts/per_page_select', ['paginator' => $articles]); ?>
         </aside>
         <table class="highlight centered col l10 m8 s12">
             <thead>
@@ -40,17 +27,26 @@
                     <td><?= $article->created_at ?></td>
                     <td>
                         <? if ($article->published): ?>
-                            <a href="#" data-position="top" data-tooltip="Снять с публикации" class="tooltipped"><i
+                            <a href="/admin/unpublish/<?= $article->id ?>" data-position="top"
+                               data-tooltip="Снять с публикации" class="tooltipped"><i
                                     class="material-icons small red-text text-darken-1">remove_circle</i></a>
                         <? else: ?>
-                            <a href="#" data-position="top" data-tooltip="Опубликовать" class="tooltipped"><i
+                            <a href="/admin/publish/<?= $article->id ?>" data-position="top"
+                               data-tooltip="Опубликовать" class="tooltipped"><i
                                     class="material-icons small">publish</i></a>
                         <? endif; ?>
                         <a href="/admin/edit/<?= $article->id ?>" class="tooltipped" data-position="top"
                            data-tooltip="Редактировать"><i class="material-icons small">edit</i></a>
-                        <a href="#" class="tooltipped" data-position="top" data-tooltip="Поместить в корзину"><i
-                                class="material-icons small red-text text-darken-1">delete</i></a>
-                        <a href="#" class="tooltipped" data-position="top" data-tooltip="Удалить навсегда"><i
+                        <? if ($article->deleted_at == null): ?>
+                            <a href="/admin/soft-delete/<?= $article->id ?>" class="tooltipped" data-position="top"
+                               data-tooltip="Поместить в корзину"><i
+                                    class="material-icons small red-text text-darken-1">delete</i></a>
+                        <?php else: ?>
+                            <a href="/admin/restore/<?= $article->id ?>" class="tooltipped" data-position="top"
+                               data-tooltip="Востановить"><i
+                                    class="material-icons small">restore</i></a>
+                        <?php endif; ?>
+                        <a href="/admin/force-delete/<?= $article->id ?>" class="tooltipped delete-post" data-position="top" data-tooltip="Удалить навсегда"><i
                                 class="material-icons small red-text text-darken-1">delete_forever</i></a>
                     </td>
                 </tr>
@@ -59,6 +55,6 @@
             </tbody>
         </table>
     </div>
-<?php printPagination($articles); ?>
+<?php includeView('layouts/pagination', ['paginator' => $articles]); ?>
 
 <?php includeView('layouts/admin_footer', []); ?>

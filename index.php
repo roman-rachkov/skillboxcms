@@ -9,8 +9,12 @@ $router = new \App\Router();
 
 //--------------------------------------------Admin------------------------------------
 //Articles
+$router->get('/admin/force-delete/*', 'App\Controller\Admin\Article@forceDelete');
+$router->get('/admin/soft-delete/*', 'App\Controller\Admin\Article@softDelete');
+$router->get('/admin/restore/*', 'App\Controller\Admin\Article@restore');
+$router->get('/admin/publish/*', 'App\Controller\Admin\Article@publish');
+$router->get('/admin/unpublish/*', 'App\Controller\Admin\Article@unpublish');
 $router->post('/admin/edit', 'App\Controller\Admin\Article@edit');
-
 $router->get('/admin/edit/*', function (int $id) {
     if (!isset($_SESSION['user']) || !$_SESSION['user']->canDo(['view_admin', 'edit_articles'], true)) {
         throw new \App\Exception\AccessDeniedException('Доступ запрещен!');
@@ -107,7 +111,7 @@ $router->get('/article/*', function (int $id) {
 $application = \App\Application::getInstance();
 $application->setRouter($router);
 
-startSession();
+startSession(350000);
 
 $application->run();
 
