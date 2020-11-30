@@ -11,4 +11,11 @@
 <p>
     <?= $article->text ?>
 </p>
+
+<hr class="divider">
+
+<?php includeView('layouts/comments/comments_list', ['article' => $article]);?>
+
+<?php includeView('layouts/comments/comment_form', ['article' => $article]); ?>
+
 <?php includeView('layouts/footer'); ?>

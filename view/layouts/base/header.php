@@ -7,6 +7,6 @@
     <meta name="keywords" content="babel 7, html, pug, css, scss, js, javascript, npm, node.js, webpack, vue, vuex">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link href="/static/css/vendors.ca1568ea7eacd55b78dd.css" rel="stylesheet">
+    <link href="/static/css/vendors.css" rel="stylesheet">
     <link href="/static/css/app.css" rel="stylesheet">
 </head>

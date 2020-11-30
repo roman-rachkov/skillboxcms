@@ -81,6 +81,13 @@ $router->get('/profile/*', function (int $userID) {
 });
 
 
+///////////////
+///
+/////------------- Comments
+
+$router->post('/comment/add/*', 'App\Controller\Comment@add');
+
+
 $router->get('/category', "App\Controller\Category@index");
 
 $router->get('/category/view', function () {
