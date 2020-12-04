@@ -6,7 +6,8 @@
             <i class="material-icons right">arrow_drop_down</i>
         </a>
     </li>
-    <li class="tab"><a class="" href="#test2">Test 2</a></li>
+    <li class="tab"><a class="<?= \App\Router::checkPath('/admin/comments') ? 'active' : '' ?>" href="/admin/comments">Комментарии<span
+                class="badge white-text teal"><?= \App\Model\Comment::where('moderated', false)->count(); ?></span></a></li>
     <li class="tab "><a href="#test3">Disabled Tab</a></li>
     <li class="tab"><a href="#test4">Test 4</a></li>
 </ul>

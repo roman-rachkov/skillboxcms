@@ -14,8 +14,10 @@
 
 <hr class="divider">
 
-<?php includeView('layouts/comments/comments_list', ['article' => $article]);?>
+<div class="comments">
+    <?php includeView('layouts/comments/comments_list', ['article' => $article]);?>
 
-<?php includeView('layouts/comments/comment_form', ['article' => $article]); ?>
+    <?php includeView('layouts/comments/comment_form', ['article' => $article]); ?>
+</div>
 
 <?php includeView('layouts/footer'); ?>

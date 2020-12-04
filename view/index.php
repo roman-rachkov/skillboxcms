@@ -4,7 +4,13 @@ includeView('layouts/header', ['title' => 'Главная']);
     <h1>Главная</h1>
     <hr>
     <div class="row">
+        <?php if (!isset($_SESSION['user']) || !$_SESSION['user']->subscribed): ?>
+
         <div class="col s12 m10">
+        <?php else: ?>
+        <div class="col s12">
+
+        <?php endif; ?>
             <div class="row">
 
                 <?php foreach ($articles as $article): ?>
@@ -28,10 +34,13 @@ includeView('layouts/header', ['title' => 'Главная']);
                     </div>
                 <?php endforeach; ?>
             </div>
-        </div>
+        <?php includeView('layouts/pagination', ['paginator' => $articles]); ?>
+            </div>
+        <?php if (!isset($_SESSION['user']) || !$_SESSION['user']->subscribed): ?>
         <div class="col s12 m2 sidebar">
             <?php includeView('sidebar'); ?>
         </div>
+        <?php endif; ?>
     </div>
 
 <?php

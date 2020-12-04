@@ -1,5 +1,6 @@
 <?php
 
+
 error_reporting(E_ALL);
 ini_set('display_errors', true);
 
@@ -8,6 +9,72 @@ require_once 'bootstrap.php';
 $router = new \App\Router();
 
 //--------------------------------------------Admin------------------------------------
+
+//Comments
+
+$router->get('/admin/comments/moderate/*', function (int $id) {
+    if (!isset($_SESSION['user']) || !$_SESSION['user']->canDo(['VIEW_ADMIN', 'moderate_comments'], true)) {
+        throw new \App\Exception\AccessDeniedException('Доступ запрещен!');
+    }
+
+    $comment = \App\Model\Comment::find($id);
+
+    if ($comment == null) {
+        throw new \App\Exception\NotFoundException('Комментарий не найден или удален');
+    }
+
+    $comment->moderated = true;
+    if($comment->save()) {
+        setSuccess('Комментарий одобрен');
+        redirect($_SERVER['HTTP_REFERER']);
+    } else {
+        setError('Произошла ошибка, пожалуйста обновите страницу и попробуйте снова');
+        redirect($_SERVER['HTTP_REFERER']);
+    }
+});
+$router->get('/admin/comments/unmoderate/*', function (int $id) {
+    if (!isset($_SESSION['user']) || !$_SESSION['user']->canDo(['VIEW_ADMIN', 'moderate_comments'], true)) {
+        throw new \App\Exception\AccessDeniedException('Доступ запрещен!');
+    }
+
+    $comment = \App\Model\Comment::find($id);
+
+    if ($comment == null) {
+        throw new \App\Exception\NotFoundException('Комментарий не найден или удален');
+    }
+
+    $comment->moderated = false;
+    if($comment->save()) {
+        setSuccess('Комментарий отправлен на модерацию');
+        redirect($_SERVER['HTTP_REFERER']);
+    } else {
+        setError('Произошла ошибка, пожалуйста обновите страницу и попробуйте снова');
+        redirect($_SERVER['HTTP_REFERER']);
+    }
+});
+$router->get('/admin/comments', function () {
+    if (!isset($_SESSION['user']) || !$_SESSION['user']->canDo(['VIEW_ADMIN', 'moderate_comments'], true)) {
+        throw new \App\Exception\AccessDeniedException('Доступ запрещен!');
+    }
+
+    $paginate = \App\Request::get('perpage');
+    $paginate = is_array($paginate) ? \App\Settings::getInstance()->get('result_per_page',
+        \App\Config::getInstance()->get('default.result_per_page')) : $paginate;
+
+    $page = \App\Request::get('page');
+    $page = is_array($page) ? 1 : $page;
+
+    if ($paginate != 'all') {
+        $comments = \App\Model\Comment::where('moderated', false)->paginate($paginate, ['*'], 'page', $page);
+    } else {
+        $comments = \App\Model\Comment::all();
+    }
+
+    return new App\View\View('admin\comments_list', ['comments' => $comments, 'title' => "Новые комментарии"]);
+
+});
+
+
 //Articles
 $router->get('/admin/force-delete/*', 'App\Controller\Admin\Article@forceDelete');
 $router->get('/admin/soft-delete/*', 'App\Controller\Admin\Article@softDelete');
@@ -86,6 +153,7 @@ $router->get('/profile/*', function (int $userID) {
 /////------------- Comments
 
 $router->post('/comment/add/*', 'App\Controller\Comment@add');
+$router->post('/comment/edit/*', 'App\Controller\Comment@edit');
 
 
 $router->get('/category', "App\Controller\Category@index");
@@ -106,7 +174,19 @@ $router->get('/category/view', function () {
 
 
 $router->get('/', function () {
-    $articles = \App\Model\Post::where('type', 'post')->where('published', true)->paginate(\App\Config::getInstance()->get('default.result_per_page'));
+
+    $paginate =  \App\Settings::getInstance()->get('result_per_page',
+        \App\Config::getInstance()->get('default.result_per_page'));
+
+    $page = \App\Request::get('page');
+    $page = is_array($page) ? 1 : $page;
+
+    if ($paginate != 'all') {
+        $articles = \App\Model\Post::where('type', 'post')->where('published', true)->orderByDesc('created_at')->paginate($paginate, ['*'], 'page', $page);
+    } else {
+        $articles = \App\Model\Post::here('type', 'post')->where('published', true)->orderByDesc('created_at')->get();
+    }
+
     return new App\View\View('index', compact('articles'));
 });
 

@@ -40,6 +40,8 @@ class ArticleController extends BaseController
         $page = Request::get('page');
         $page = is_array($page) ? 1 : $page;
 
+        $posts = $posts->orderByDesc('created_at');
+
         if ($paginate != 'all') {
             $posts = $posts->paginate($paginate, ['*'], 'page', $page)->setPath('/admin');
         } else {

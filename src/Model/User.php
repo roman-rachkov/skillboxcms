@@ -54,7 +54,7 @@ class User extends Model
      * @param bool $require если true, то вернет истину только в случае если у пользователя есть все роли передеанные в массиве
      * @return bool
      */
-    public function hasRole(mixed $roleName, $require = false)
+    public function hasRole($roleName, $require = false)
     {
         if (is_array($roleName)) {
             foreach ($roleName as $name) {
