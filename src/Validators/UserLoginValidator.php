@@ -3,7 +3,6 @@
 
 namespace App\Validators;
 
-
 use App\Model\User;
 use Valitron\Validator;
 
@@ -14,7 +13,6 @@ class UserLoginValidator implements iValidator
     public function __construct(array $data)
     {
         $this->validator = new Validator($data);
-
     }
 
     public function validate()

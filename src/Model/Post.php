@@ -8,7 +8,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Post extends Model
 {
-
     use SoftDeletes;
 
 //    protected $table = 'articles';
@@ -34,5 +33,4 @@ class Post extends Model
     {
         return $this->hasMany('App\Model\Comment');
     }
-
 }

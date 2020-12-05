@@ -3,13 +3,11 @@
 
 namespace App\Validators;
 
-
 use App\Model\User;
 use Valitron\Validator;
 
 class UserSubscribeValidator implements iValidator
 {
-
     protected Validator $validator;
 
     public function __construct(array $data)

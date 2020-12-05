@@ -13,8 +13,7 @@ use App\View\View;
 
 class ArticleController extends BaseController
 {
-
-    public function indexAction()
+    public function indexAction(): View
     {
         if (!isset($_SESSION['user']) || !$_SESSION['user']->canDo('edit_articles')) {
             throw new AccessDeniedException('Доступ запрещен!');
@@ -34,8 +33,10 @@ class ArticleController extends BaseController
         }
 
         $paginate = Request::get('perpage');
-        $paginate = is_array($paginate) ? Settings::getInstance()->get('result_per_page',
-            Config::getInstance()->get('default.result_per_page')) : $paginate;
+        $paginate = is_array($paginate) ? Settings::getInstance()->get(
+            'result_per_page',
+            Config::getInstance()->get('default.result_per_page')
+        ) : $paginate;
 
         $page = Request::get('page');
         $page = is_array($page) ? 1 : $page;
@@ -47,15 +48,17 @@ class ArticleController extends BaseController
         } else {
             $posts = $posts->all();
         }
-        return new View('admin/post_list',
+        return new View(
+            'admin/post_list',
             [
                 'title' => "Список постов",
                 'pageClass' => 'admin',
                 'articles' => $posts
-            ]);
+            ]
+        );
     }
 
-    public function addAction()
+    public function addAction(): View
     {
         if (!isset($_SESSION['user']) || !$_SESSION['user']->canDo('create_articles')) {
             throw new AccessDeniedException('Доступ запрещен');
@@ -95,7 +98,6 @@ class ArticleController extends BaseController
         $post->published = false;
         $post->save();
         redirect($_SERVER['HTTP_REFERER']);
-
     }
 
     public function publishAction(int $id)
@@ -108,7 +110,6 @@ class ArticleController extends BaseController
         $post->published = true;
         $post->save();
         redirect($_SERVER['HTTP_REFERER']);
-
     }
 
     public function softDeleteAction(int $id)
@@ -122,7 +123,6 @@ class ArticleController extends BaseController
         $post->save();
         $post->delete();
         redirect($_SERVER['HTTP_REFERER']);
-
     }
 
     public function restoreAction(int $id)
@@ -134,7 +134,6 @@ class ArticleController extends BaseController
         $post = Post::onlyTrashed()->find($id);
         $post->restore();
         redirect($_SERVER['HTTP_REFERER']);
-
     }
 
     public function forceDeleteAction(int $id)
@@ -144,13 +143,12 @@ class ArticleController extends BaseController
         }
 
         $post = Post::withTrashed()->find($id);
-        if(isset($post->img_src)){
+        if (isset($post->img_src)) {
             if (file_exists(UPLOAD_DIR . DIRECTORY_SEPARATOR . $post->img_src)) {
                 unlink(UPLOAD_DIR . DIRECTORY_SEPARATOR . $post->img_src);
             }
         }
         $post->forceDelete();
         redirect($_SERVER['HTTP_REFERER']);
-
     }
 }

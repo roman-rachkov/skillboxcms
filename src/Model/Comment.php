@@ -3,14 +3,12 @@
 
 namespace App\Model;
 
-
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Kalnoy\Nestedset\NodeTrait;
 
 class Comment extends Model
 {
-
     use SoftDeletes;
     use NodeTrait;
 
@@ -27,11 +25,13 @@ class Comment extends Model
         return $this->hasMany('App\Model\Comment', 'parent_id');
     }
 
-    public function article(){
+    public function article()
+    {
         return $this->belongsTo('App\Model\Comment', 'post_id');
     }
 
-    public function user(){
+    public function user()
+    {
         return $this->belongsTo('App\Model\User', 'user_id');
     }
 }

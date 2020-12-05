@@ -24,7 +24,7 @@ $router->get('/admin/comments/moderate/*', function (int $id) {
     }
 
     $comment->moderated = true;
-    if($comment->save()) {
+    if ($comment->save()) {
         setSuccess('Комментарий одобрен');
         redirect($_SERVER['HTTP_REFERER']);
     } else {
@@ -44,7 +44,7 @@ $router->get('/admin/comments/unmoderate/*', function (int $id) {
     }
 
     $comment->moderated = false;
-    if($comment->save()) {
+    if ($comment->save()) {
         setSuccess('Комментарий отправлен на модерацию');
         redirect($_SERVER['HTTP_REFERER']);
     } else {
@@ -58,8 +58,10 @@ $router->get('/admin/comments', function () {
     }
 
     $paginate = \App\Request::get('perpage');
-    $paginate = is_array($paginate) ? \App\Settings::getInstance()->get('result_per_page',
-        \App\Config::getInstance()->get('default.result_per_page')) : $paginate;
+    $paginate = is_array($paginate) ? \App\Settings::getInstance()->get(
+        'result_per_page',
+        \App\Config::getInstance()->get('default.result_per_page')
+    ) : $paginate;
 
     $page = \App\Request::get('page');
     $page = is_array($page) ? 1 : $page;
@@ -71,7 +73,6 @@ $router->get('/admin/comments', function () {
     }
 
     return new App\View\View('admin\comments_list', ['comments' => $comments, 'title' => "Новые комментарии"]);
-
 });
 
 
@@ -87,12 +88,14 @@ $router->get('/admin/edit/*', function (int $id) {
         throw new \App\Exception\AccessDeniedException('Доступ запрещен!');
     }
 
-    return new App\View\View('admin/post',
+    return new App\View\View(
+        'admin/post',
         [
             'title' => "Редактирование статьи",
             'pageClass' => 'admin',
             'article' => \App\Model\Post::find($id)
-        ]);
+        ]
+    );
 });
 $router->post('/admin/new', 'App\Controller\Admin\Article@add');
 
@@ -109,16 +112,18 @@ $router->get('/admin', 'App\Controller\Admin\Article@index');
 //User
 $router->post('/subscribe', 'App\Controller\User@subscribe');
 
-$router->post('/unsubscribe', 'App\Controller\User@unsubscribe');
+$router->get('/unsubscribe', 'App\Controller\User@unsubscribe');
 
 $router->post('/registration', 'App\Controller\User@registration');
 
 $router->get('/registration', function () {
-    return new App\View\View('registration',
+    return new App\View\View(
+        'registration',
         [
             'title' => 'Регистрация нового пользователя',
             'pageClass' => 'registration'
-        ]);
+        ]
+    );
 });
 
 $router->post('/login', 'App\Controller\User@login');
@@ -136,15 +141,17 @@ $router->get('/profile', function () {
     if (!isset($_SESSION['user'])) {
         throw new \App\Exception\NotFoundException('Пользователь не найден!');
     }
-    return new App\View\View('profile', ['title' => 'Профиль пользователя ' . $_SESSION['user']->username, 'user' => $_SESSION['user']]);
+    return new App\View\View('profile', ['user' => $_SESSION['user']]);
 });
+
+$router->post('/profile/update', 'App\Controller\User@update');
 
 $router->get('/profile/*', function (int $userID) {
     $user = \App\Model\User::find($userID);
     if (!$user) {
         throw new \App\Exception\NotFoundException('Пользователь не найден!');
     }
-    return new App\View\View('profile', ['title' => 'Профиль пользователя ' . $user->username, 'user' => $user]);
+    return new App\View\View('profile', ['user' => $user]);
 });
 
 
@@ -174,9 +181,10 @@ $router->get('/category/view', function () {
 
 
 $router->get('/', function () {
-
-    $paginate =  \App\Settings::getInstance()->get('result_per_page',
-        \App\Config::getInstance()->get('default.result_per_page'));
+    $paginate =  \App\Settings::getInstance()->get(
+        'result_per_page',
+        \App\Config::getInstance()->get('default.result_per_page')
+    );
 
     $page = \App\Request::get('page');
     $page = is_array($page) ? 1 : $page;

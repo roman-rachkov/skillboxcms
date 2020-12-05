@@ -3,7 +3,11 @@
         <div class="col s<?= 12 - $level < 6 ? 6 : 12 - $level ?> offset-s<?= $level > 6 ? 6 : $level; ?>">
             <div class="card horizontal z-depth-0 comment <?= $level != 0 ?: 'root'; ?>" data-id="<?= $comment->id ?>">
                 <div class="card-image">
-                    <img src="https://lorempixel.com/100/190/nature/6">
+                    <?php if ($comment->user->avatar && file_exists(UPLOAD_DIR . $comment->user->avatar)): ?>
+                        <img src="/<?= UPLOAD_DIR_NAME . $comment->user->avatar ?>" alt="<?= $comment->user->username ?>" class="avatar">
+                    <?php else: ?>
+                        <img src="/static/img/empty-avatar.jpg" class="avatar" alt="<?= $comment->user->username ?>">
+                    <?php endif; ?>
                 </div>
                 <div class="card-stacked">
                     <div class="card-content">

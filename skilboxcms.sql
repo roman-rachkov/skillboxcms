@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.0.2
+-- version 5.0.4
 -- https://www.phpmyadmin.net/
 --
--- Хост: 127.0.0.1:3306
--- Время создания: Дек 04 2020 г., 09:37
+-- Хост: localhost
+-- Время создания: Дек 05 2020 г., 10:58
 -- Версия сервера: 5.7.29
--- Версия PHP: 7.4.5
+-- Версия PHP: 8.0.0
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -96,7 +96,7 @@ INSERT INTO `permissions` (`id`, `key`, `name`, `created_at`, `updated_at`) VALU
 (8, 'delete_articles', 'Удалить статью', '2020-10-24 01:44:51', '2020-10-24 01:44:51'),
 (9, 'delete_comment', 'Удалить комментарий', '2020-10-24 01:44:51', '2020-10-24 01:44:51'),
 (10, 'edit_permissions', 'Редктирование прав', '2020-11-20 05:57:46', '2020-11-20 05:57:46'),
-(11, 'edit_users', 'Редактирование пользователей', '2020-11-20 05:57:46', '2020-11-20 05:57:46'),
+(11, 'edit_user', 'Редактирование пользователей', '2020-11-20 05:57:46', '2020-11-20 05:57:46'),
 (12, 'edit_roles', 'Редактирование ролей', '2020-11-20 05:58:15', '2020-11-20 05:58:15');
 
 -- --------------------------------------------------------
@@ -132,7 +132,10 @@ INSERT INTO `permission_role` (`permission_id`, `role_id`, `created_at`, `update
 (8, 2, '2020-10-24 01:48:06', '2020-10-24 01:48:06'),
 (8, 3, '2020-10-24 01:49:02', '2020-10-24 01:49:02'),
 (9, 2, '2020-10-24 01:47:41', '2020-10-24 01:47:41'),
-(9, 3, '2020-10-24 01:49:02', '2020-10-24 01:49:02');
+(9, 3, '2020-10-24 01:49:02', '2020-10-24 01:49:02'),
+(10, 3, '2020-12-05 06:52:28', '2020-12-05 06:52:28'),
+(11, 3, '2020-12-05 06:52:28', '2020-12-05 06:52:28'),
+(12, 3, '2020-12-05 06:52:38', '2020-12-05 06:52:38');
 
 -- --------------------------------------------------------
 
@@ -232,6 +235,7 @@ CREATE TABLE `users` (
   `password` varchar(255) DEFAULT NULL,
   `subscribed` tinyint(1) NOT NULL DEFAULT '0',
   `avatar` varchar(255) DEFAULT NULL,
+  `about` text,
   `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -240,12 +244,12 @@ CREATE TABLE `users` (
 -- Дамп данных таблицы `users`
 --
 
-INSERT INTO `users` (`id`, `email`, `username`, `password`, `subscribed`, `avatar`, `created_at`, `updated_at`) VALUES
-(1, 'admin@email.ru', 'admin', '$2y$10$hoCBqm7ieTCAqeuJbzscBOaIpgNE1n8v6xsqkOL4EQXIaSn8pKVC2', 1, NULL, '2020-10-23 22:33:31', '2020-11-19 19:21:34'),
-(2, 'moderator@test.ru', 'SuperModerator', '$2y$10$YdWQM.NoUMXcb7I52KCER.I3EO/S6sGU7Zun9YJvH9R0xcKbrFNUG', 0, NULL, '2020-11-18 00:25:16', '2020-11-18 00:25:16'),
-(3, 'user@test.ru', 'SimpleUser', '$2y$10$w4OYVyx5YFwVL8R9nUOEq.ezjIspD1H9n8yDNH.5Wkd/H1m283g3O', 0, NULL, '2020-11-19 19:06:16', '2020-11-19 20:52:57'),
-(4, 'another@subscriber.ru', NULL, NULL, 1, NULL, '2020-11-19 19:09:39', '2020-11-19 19:09:39'),
-(5, 'registered@subscriber.ru', 'registeredSubscriber', '$2y$10$JDzO7Fl00dSrQ986tpWqK.R0J18.ieMYqQHo9KAHBXkzSQKupGK0a', 1, NULL, '2020-11-19 19:10:22', '2020-11-19 19:34:16');
+INSERT INTO `users` (`id`, `email`, `username`, `password`, `subscribed`, `avatar`, `about`, `created_at`, `updated_at`) VALUES
+(1, 'admin@email.ru', 'admin', '$2y$10$hoCBqm7ieTCAqeuJbzscBOaIpgNE1n8v6xsqkOL4EQXIaSn8pKVC2', 1, '\\avatars\\5fcb3648d8ef1.jpg', 'Большой и интересный текст об админе', '2020-10-23 22:33:31', '2020-12-05 00:27:11'),
+(2, 'moderator@test.ru', 'SuperModerator', '$2y$10$YdWQM.NoUMXcb7I52KCER.I3EO/S6sGU7Zun9YJvH9R0xcKbrFNUG', 0, NULL, NULL, '2020-11-18 00:25:16', '2020-11-18 00:25:16'),
+(3, 'user@test.ru', 'SimpleUser', '$2y$10$w4OYVyx5YFwVL8R9nUOEq.ezjIspD1H9n8yDNH.5Wkd/H1m283g3O', 0, NULL, NULL, '2020-11-19 19:06:16', '2020-11-19 20:52:57'),
+(4, 'another@subscriber.ru', NULL, NULL, 1, NULL, NULL, '2020-11-19 19:09:39', '2020-11-19 19:09:39'),
+(5, 'registered@subscriber.ru', 'registeredSubscriber', '$2y$10$JDzO7Fl00dSrQ986tpWqK.R0J18.ieMYqQHo9KAHBXkzSQKupGK0a', 1, NULL, NULL, '2020-11-19 19:10:22', '2020-11-19 19:34:16');
 
 -- --------------------------------------------------------
 

@@ -3,7 +3,6 @@
 
 namespace App\Validators;
 
-
 use Valitron\Validator;
 
 class ArticleValidator implements iValidator

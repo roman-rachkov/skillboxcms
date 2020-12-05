@@ -3,13 +3,11 @@
 
 namespace App;
 
-
 use App\Model\Setting;
 use App\Traits\TSingleton;
 
 class Settings
 {
-
     use TSingleton;
 
     protected $settings;
@@ -19,7 +17,8 @@ class Settings
         $this->settings = Setting::all();
     }
 
-    public function get(string $key, $default = null){
+    public function get(string $key, $default = null)
+    {
         $result = $this->settings->firstWhere('key', $key)->value;
         return $result ?? $default;
     }
@@ -32,10 +31,10 @@ class Settings
         return $this->settings;
     }
 
-    public function set(string $key, string $value){
+    public function set(string $key, string $value)
+    {
         $setting = $this->settings->firstWhere('key', $key);
         $setting->value = $value;
         return $setting->save();
     }
-
 }

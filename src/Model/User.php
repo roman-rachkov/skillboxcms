@@ -14,8 +14,13 @@ class User extends Model
         return $this->belongsToMany('App\Model\Role', 'user_role');
     }
 
-    public function articles(){
+    public function articles()
+    {
         return $this->hasMany('App\Model\Post');
+    }
+    public function comments()
+    {
+        return $this->hasMany('App\Model\Comment');
     }
 
     /**
@@ -24,7 +29,7 @@ class User extends Model
      * @param bool $require если true, то вернет истину только в случае если у пользователя есть все права передеанные в массиве
      * @return bool
      */
-    public function canDo($permission, $require = false)
+    public function canDo(mixed $permission, $require = false): bool
     {
         if (is_array($permission)) {
             foreach ($permission as $perm) {
@@ -45,6 +50,7 @@ class User extends Model
                 }
             }
         }
+        return false;
     }
 
 
@@ -54,7 +60,7 @@ class User extends Model
      * @param bool $require если true, то вернет истину только в случае если у пользователя есть все роли передеанные в массиве
      * @return bool
      */
-    public function hasRole($roleName, $require = false)
+    public function hasRole(mixed $roleName, $require = false): bool
     {
         if (is_array($roleName)) {
             foreach ($roleName as $name) {
@@ -74,6 +80,4 @@ class User extends Model
             }
         }
     }
-
-
 }

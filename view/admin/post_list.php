@@ -26,18 +26,18 @@
                     <td><?= $article->user->username ?></td>
                     <td><?= $article->created_at ?></td>
                     <td>
-                        <? if ($article->published): ?>
+                        <?php if ($article->published): ?>
                             <a href="/admin/unpublish/<?= $article->id ?>" data-position="top"
                                data-tooltip="Снять с публикации" class="tooltipped"><i
                                     class="material-icons small red-text text-darken-1">remove_circle</i></a>
-                        <? else: ?>
+                        <?php else: ?>
                             <a href="/admin/publish/<?= $article->id ?>" data-position="top"
                                data-tooltip="Опубликовать" class="tooltipped"><i
                                     class="material-icons small">publish</i></a>
-                        <? endif; ?>
+                        <?php endif; ?>
                         <a href="/admin/edit/<?= $article->id ?>" class="tooltipped" data-position="top"
                            data-tooltip="Редактировать"><i class="material-icons small">edit</i></a>
-                        <? if ($article->deleted_at == null): ?>
+                        <?php if ($article->deleted_at == null): ?>
                             <a href="/admin/soft-delete/<?= $article->id ?>" class="tooltipped" data-position="top"
                                data-tooltip="Поместить в корзину"><i
                                     class="material-icons small red-text text-darken-1">delete</i></a>

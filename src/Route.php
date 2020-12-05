@@ -70,7 +70,7 @@ class Route
      * @return mixed
      * @throws HttpException
      */
-    public function run($uri)
+    public function run($uri): mixed
     {
         if (preg_match('/^' . str_replace(['*', '/'], ['\w+', '\/'], $this->getPath()) . '$/', $uri, $matches)) {
             $arr = explode('/', $uri);

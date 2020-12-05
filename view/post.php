@@ -2,7 +2,7 @@
 
 <h1><?= $article->title ?></h1>
 <hr>
-<?php if ($article->img_src): ?>
+<?php if ($article->img_src && file_exists(UPLOAD_DIR . $article->img_src)): ?>
     <div class="row">
         <img src="/<?= UPLOAD_DIR_NAME . $article->img_src ?>" alt="<?= $article->title ?>"
              class="image-responsive col s12">
@@ -11,6 +11,7 @@
 <p>
     <?= $article->text ?>
 </p>
+<span class="help-text">Опубликованно: <?=$article->created_at?></span>
 
 <hr class="divider">
 

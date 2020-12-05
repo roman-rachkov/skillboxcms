@@ -9,6 +9,4 @@ use App\View\View;
 
 class ArticleController extends BaseController
 {
-
-
 }

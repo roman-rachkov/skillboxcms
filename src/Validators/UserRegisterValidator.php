@@ -3,19 +3,16 @@
 
 namespace App\Validators;
 
-
 use App\Model\User;
 use Valitron\Validator;
 
 class UserRegisterValidator implements iValidator
 {
-
     protected Validator $validator;
 
     public function __construct(array $data)
     {
         $this->validator = new Validator($data);
-
     }
 
     public function validate()

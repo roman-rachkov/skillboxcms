@@ -108,6 +108,8 @@ function includeView($templateName, $data = [])
     if (file_exists($file)) {
         extract($data);
         require $file;
+    } else {
+        debug('Файл шаблона '.$file.' не существует');
     }
 }
 
@@ -231,8 +233,12 @@ function printSuccess()
  * @param string $size
  * @return array|false
  */
-function tryToUploadFile(string $key, string $path, array $mimetypes = ['image/png', 'image/jpeg', 'image/gif'], string $size = '5M')
+function tryToUploadFile(string $key, string $path, array $mimetypes = ['image/png', 'image/jpeg', 'image/gif'], string $size = '5M'): bool|array
 {
+    if(empty(\App\Request::files($key)['name'])){
+        return false;
+    }
+
     $storage = new \Upload\Storage\FileSystem(UPLOAD_DIR . DIRECTORY_SEPARATOR . $path);
     $file = new \Upload\File($key, $storage);
     $file->setName(uniqid());

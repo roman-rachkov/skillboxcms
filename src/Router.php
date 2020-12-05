@@ -97,11 +97,13 @@ class Router
      * @param string $path
      * @return bool
      */
-    public static function  checkPath(string $path){
+    public static function checkPath(string $path)
+    {
         return self::getPath() === $path;
     }
 
-    public static function buildQueryString(array $newParams){
+    public static function buildQueryString(array $newParams)
+    {
         $getArr = Request::get();
 
         $getArr = array_merge($getArr, $newParams);

@@ -3,7 +3,6 @@
 
 namespace App\Controller;
 
-
 use App\Exception\AccessDeniedException;
 use App\Exception\NotFoundException;
 use App\Model\Comment;
@@ -12,10 +11,8 @@ use App\Request;
 
 class CommentController extends BaseController
 {
-
     public function addAction(int $postId)
     {
-
         if ($postId == null) {
             throw new AccessDeniedException('Неверные данные отправки комментария');
         }
@@ -42,12 +39,9 @@ class CommentController extends BaseController
             setSuccess('Комментарий успешно добавлен');
             redirect($_SERVER['HTTP_REFERER']);
         }
-
-
     }
     public function editAction(int $id)
     {
-
         if ($id == null) {
             throw new AccessDeniedException('Неверные данные отправки комментария');
         }
@@ -60,11 +54,11 @@ class CommentController extends BaseController
 
         $comment = Comment::find($id);
 
-        if($comment == null){
+        if ($comment == null) {
             throw new NotFoundException('Комментарий не найден или удален');
         }
 
-        if($comment->user->id != $_SESSION['user']->id && !$_SESSION['user']->canDo('edit_comment')){
+        if ($comment->user->id != $_SESSION['user']->id && !$_SESSION['user']->canDo('edit_comment')) {
             throw new AccessDeniedException('Нет прав на редактирование');
         }
 
@@ -75,8 +69,5 @@ class CommentController extends BaseController
             setSuccess('Комментарий успешно обновлен');
             redirect($_SERVER['HTTP_REFERER']);
         }
-
-
     }
-
 }

@@ -2,12 +2,14 @@
 
 namespace App\Controller;
 
+use App\Exception\AccessDeniedException;
 use App\Model\Role;
 use App\Model\User;
 use App\Request;
 use App\Validators\UserLoginValidator;
 use App\Validators\UserRegisterValidator;
 use App\Validators\UserSubscribeValidator;
+use App\Validators\UserUpdateInfoValidator;
 use App\View\View;
 
 class UserController extends BaseController
@@ -65,7 +67,6 @@ class UserController extends BaseController
                 $user = new User();
                 $user->email = $post['email'];
             } else {
-                debug($validator->errors());
                 foreach ($validator->errors()['email'] as $error) {
                     setError('Ошибка при подписке - ' . $error);
                 }
@@ -73,7 +74,7 @@ class UserController extends BaseController
             }
         }
         $user->subscribed = true;
-        setSuccess('Подписска оформлена!');
+        setSuccess('Подписка оформлена!');
         $user->save();
         if (isset($_SESSION['user'])) {
             $_SESSION['user'] = $user;
@@ -83,7 +84,47 @@ class UserController extends BaseController
 
     public function unsubscribeAction()
     {
-
+        if (isset($_SESSION['user'])) {
+            $user = User::find($_SESSION['user']->id);
+        } else {
+            setError("Пожалуйста авторизуйтесь");
+            redirect('/login');
+        }
+        $user->subscribed = false;
+        setSuccess('Подписка удалена!');
+        $user->save();
+        $_SESSION['user'] = $user;
+        redirect($_SERVER['HTTP_REFERER']);
     }
 
+    public function updateAction()
+    {
+        if (!isset($_SESSION['user'])) {
+            throw new AccessDeniedException('Доступ запрещен');
+        }
+        $user = User::find($_SESSION['user']->id);
+        $data = Request::post();
+        $validator = new UserUpdateInfoValidator($data);
+
+        if ($validator->validate()) {
+            $user->username = $data['username'];
+            $user->about = $data['about'];
+            $user->email = $data['email'];
+
+            $avatar = tryToUploadFile('avatar', 'avatars', ['image/png', 'image/jpeg', 'image/gif'], '2M');
+
+            if ($avatar) {
+                $user->avatar = DIRECTORY_SEPARATOR . 'avatars' . DIRECTORY_SEPARATOR . $avatar['name'];
+            }
+
+            if ($user->save()) {
+                setSuccess('Данные успешно обновлены');
+                $_SESSION['user'] = $user;
+                redirect($_SERVER['HTTP_REFERER']);
+            } else {
+                setError('Что то пошло не так');
+            }
+        }
+        return new View('profile', ['errors' => $validator->errors(), 'request' => $data, 'user'=>$user]);
+    }
 }

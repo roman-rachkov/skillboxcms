@@ -24,7 +24,7 @@
                 <div class="row">
                     <img src="/<?= UPLOAD_DIR_NAME . $article->img_src ?>" alt="" class="col s12">
                 </div>
-            <? endif; ?>
+            <?php endif; ?>
             <div class="row">
                 <div class="col s12 file-field input-field">
                     <div class="btn">
@@ -44,7 +44,7 @@
                     <?php else: ?>
                         <i class="material-icons left">note_add</i>
                         Опубликовать
-                    <? endif; ?>
+                    <?php endif; ?>
                 </button>
                 <a class="btn waves-effect waves-light white black-text" href="#" onclick="history.back()">
                     <i class="material-icons left">cancel</i>

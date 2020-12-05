@@ -3,10 +3,10 @@
     <div class="row">
         <form class="registration-form col s12" action="#" method="post">
             <div class="input-field">
-                <label for="login">Логин</label>
+                <label for="login">Имя</label>
                 <input class="validate <?= isset($errors['username']) ? 'invalid' : '' ?>" type="text"
                        name="username"
-                       placeholder="Ваш логин"
+                       placeholder="Ваше имя"
                        autocomplete="username"
                        value="<?= $request['username'] ?? '' ?>"
                        id="login"

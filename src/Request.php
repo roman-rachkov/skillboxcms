@@ -11,9 +11,9 @@ class Request
      * Если массив не существует возвращет false
      * @param string $name
      * @param array $args
-     * @return bool|mixed|null
+     * @return mixed
      */
-    public static function __callStatic(string $name, array $args)
+    public static function __callStatic(string $name, array $args): mixed
     {
         $key = '_' . strtoupper($name);
         if (array_key_exists($key, $GLOBALS)) {
@@ -28,10 +28,10 @@ class Request
 
     /**
      * Подготавливает данные от иньекции
-     * @param $data
-     * @return array|string
+     * @param mixed $data
+     * @return mixed
      */
-    private static function prepareData($data)
+    private static function prepareData(mixed $data): mixed
     {
         if (is_array($data)) {
             $preparedArray = [];

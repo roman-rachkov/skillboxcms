@@ -14,7 +14,7 @@ trait TSingleton
     {
     }
 
-    protected function __wakeup()
+    public function __wakeup()
     {
     }
 

@@ -12,7 +12,6 @@ use App\Traits\TSingleton;
 
 class Config
 {
-
     use TSingleton;
 
     private $configs = [];
@@ -31,5 +30,4 @@ class Config
     {
         return arrayGet($this->configs, $config, $default);
     }
-
 }

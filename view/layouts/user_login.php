@@ -1,5 +1,5 @@
 <div class="user">
-<?php if(empty($_SESSION['user'])): ?>
+<?php if (empty($_SESSION['user'])): ?>
 <p>Привет, Гость!</p>
     <p>
         <a class="light-blue-text text-accent-4" href="/login"> Войти </a>&nbspили<a class="light-blue-text text-accent-4" href="/registration">Зарегистрироваться</a>!
