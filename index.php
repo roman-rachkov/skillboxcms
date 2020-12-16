@@ -13,7 +13,7 @@ require_once 'routes.php';
 $application = \App\Application::getInstance();
 $application->setRouter($router);
 
-startSession(350000);
+startSession();
 
 $application->run();
 

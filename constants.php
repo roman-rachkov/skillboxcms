@@ -6,7 +6,7 @@
  * Time: 12:35
  */
 
-define('DEBUG', true);
+define('DEBUG', false);
 define('APP_DIR', $_SERVER['DOCUMENT_ROOT']);
 define('CONFIG_DIR', APP_DIR . DIRECTORY_SEPARATOR . 'configs');
 define('VIEW_DIR', APP_DIR . DIRECTORY_SEPARATOR . 'view');
