@@ -3,15 +3,21 @@
         <div class="col s<?= 12 - $level < 6 ? 6 : 12 - $level ?> offset-s<?= $level > 6 ? 6 : $level; ?>">
             <div class="card horizontal z-depth-0 comment <?= $level != 0 ?: 'root'; ?>" data-id="<?= $comment->id ?>">
                 <div class="card-image">
-                    <?php if ($comment->user->avatar && file_exists(UPLOAD_DIR . $comment->user->avatar)): ?>
-                        <img src="/<?= UPLOAD_DIR_NAME . $comment->user->avatar ?>" alt="<?= $comment->user->username ?>" class="avatar">
-                    <?php else: ?>
-                        <img src="/static/img/empty-avatar.jpg" class="avatar" alt="<?= $comment->user->username ?>">
-                    <?php endif; ?>
+                    <a href="/profile/<?= $comment->user->id ?>">
+                        <?php if ($comment->user->avatar && file_exists(UPLOAD_DIR . $comment->user->avatar)): ?>
+                            <img src="/<?= UPLOAD_DIR_NAME . $comment->user->avatar ?>"
+                                 alt="<?= $comment->user->username ?>" class="avatar">
+                        <?php else: ?>
+                            <img src="/static/img/empty-avatar.jpg" class="avatar"
+                                 alt="<?= $comment->user->username ?>">
+                        <?php endif; ?>
+                    </a>
                 </div>
                 <div class="card-stacked">
                     <div class="card-content">
-                        <span class="card-title"><?= $comment->user->username ?></span>
+                        <a href="/profile/<?= $comment->user->id ?>">
+                            <span class="card-title"><?= $comment->user->username ?></span>
+                        </a>
                         <p><?= $comment->text; ?></p>
                         <?php if (!$comment->moderated): ?>
                             <span class="help-text">Комментарий не был модерирован</span>
@@ -33,10 +39,12 @@
                         <?php if ($_SESSION['user']->canDo('moderate_comments')): ?>
                             <div class="admin-links right tooltipped">
                                 <?php if (!$comment->moderated): ?>
-                                    <a href="/admin/comments/moderate/<?=$comment->id?>" class="tooltipped" data-tooltip="Подтвердить модерацию"><i
+                                    <a href="/admin/comments/moderate/<?= $comment->id ?>" class="tooltipped"
+                                       data-tooltip="Подтвердить модерацию"><i
                                             class="material-icons tiny green-text text-darken-1">check</i></a>
                                 <?php else: ?>
-                                    <a href="/admin/comments/unmoderate/<?=$comment->id?>" class="tooltipped" data-tooltip="Отпраить на модерацию"><i
+                                    <a href="/admin/comments/unmoderate/<?= $comment->id ?>" class="tooltipped"
+                                       data-tooltip="Отпраить на модерацию"><i
                                             class="material-icons tiny red-text text-darken-1">clear</i></a>
                                 <?php endif; ?>
                             </div>

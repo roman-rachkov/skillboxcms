@@ -33,3 +33,6 @@
 
 <div class="content-wrapper">
     <div class="container">
+        <?php if (isset($title)):?>
+            <h1 class="header center-align"><?=$title?></h1>
+        <?php endif;?>

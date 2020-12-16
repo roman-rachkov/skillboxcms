@@ -1,5 +1,7 @@
 <?php
 
+use JetBrains\PhpStorm\Pure;
+
 
 /**
  * Добавляет в сессию данные дебага, для последующего удобного вывода
@@ -244,7 +246,7 @@ function tryToUploadFile(string $key, string $path, array $mimetypes = ['image/p
     $file->setName(uniqid());
     $file->addValidations([
         new \Upload\Validation\Mimetype($mimetypes),
-        new \Upload\Validation\Size($size)
+        new \App\Validators\FileSizeValidator($size)
     ]);
 
     $data = [
@@ -255,14 +257,12 @@ function tryToUploadFile(string $key, string $path, array $mimetypes = ['image/p
         'md5' => $file->getMd5(),
         'dimensions' => $file->getDimensions()
     ];
-    debug($data);
+
     try {
         $file->upload();
         return $data;
     } catch (\Exception $e) {
-        debug($e);
         $errors = $file->getErrors();
-        debug($errors);
         foreach ($errors as $error) {
             setError($error);
         }
@@ -270,6 +270,17 @@ function tryToUploadFile(string $key, string $path, array $mimetypes = ['image/p
     }
 }
 
-
+/**
+ * Возвращает человекочитаемый размер файла
+ * @param $bytes
+ * @param int $decimals
+ * @return string
+ */
+function humanFilesize($bytes, $decimals = 2): string
+{
+    $sz = ['b', 'Kb', 'Mb', 'Gb', 'Tb', 'Pb'];
+    $factor = floor((strlen($bytes) - 1) / 3);
+    return sprintf("%.{$decimals}f", $bytes / pow(1024, $factor)) . @$sz[$factor];
+}
 
 ?>

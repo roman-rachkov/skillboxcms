@@ -1,6 +1,4 @@
 <?php includeView('layouts/header', ['title' => $article->title]); ?>
-
-<h1><?= $article->title ?></h1>
 <hr>
 <?php if ($article->img_src && file_exists(UPLOAD_DIR . $article->img_src)): ?>
     <div class="row">
@@ -11,14 +9,16 @@
 <p>
     <?= $article->text ?>
 </p>
-<span class="help-text">Опубликованно: <?=$article->created_at?></span>
+<span class="help-text">Опубликованно: <?= $article->created_at ?></span>
 
 <hr class="divider">
 
-<div class="comments">
-    <?php includeView('layouts/comments/comments_list', ['article' => $article]);?>
+<?php if ($type == 'post'): ?>
+    <div class="comments">
+        <?php includeView('layouts/comments/comments_list', ['article' => $article]); ?>
 
-    <?php includeView('layouts/comments/comment_form', ['article' => $article]); ?>
-</div>
+        <?php includeView('layouts/comments/comment_form', ['article' => $article]); ?>
+    </div>
+<?php endif; ?>
 
 <?php includeView('layouts/footer'); ?>

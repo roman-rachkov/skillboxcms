@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: localhost
--- Время создания: Дек 05 2020 г., 10:58
+-- Время создания: Дек 16 2020 г., 05:59
 -- Версия сервера: 5.7.29
 -- Версия PHP: 8.0.0
 
@@ -96,8 +96,7 @@ INSERT INTO `permissions` (`id`, `key`, `name`, `created_at`, `updated_at`) VALU
 (8, 'delete_articles', 'Удалить статью', '2020-10-24 01:44:51', '2020-10-24 01:44:51'),
 (9, 'delete_comment', 'Удалить комментарий', '2020-10-24 01:44:51', '2020-10-24 01:44:51'),
 (10, 'edit_permissions', 'Редктирование прав', '2020-11-20 05:57:46', '2020-11-20 05:57:46'),
-(11, 'edit_user', 'Редактирование пользователей', '2020-11-20 05:57:46', '2020-11-20 05:57:46'),
-(12, 'edit_roles', 'Редактирование ролей', '2020-11-20 05:58:15', '2020-11-20 05:58:15');
+(11, 'edit_user', 'Редактирование пользователей', '2020-11-20 05:57:46', '2020-11-20 05:57:46');
 
 -- --------------------------------------------------------
 
@@ -107,7 +106,7 @@ INSERT INTO `permissions` (`id`, `key`, `name`, `created_at`, `updated_at`) VALU
 
 CREATE TABLE `permission_role` (
   `permission_id` int(11) NOT NULL,
-  `role_id` int(11) NOT NULL DEFAULT '1',
+  `role_id` int(11) NOT NULL,
   `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -117,25 +116,26 @@ CREATE TABLE `permission_role` (
 --
 
 INSERT INTO `permission_role` (`permission_id`, `role_id`, `created_at`, `updated_at`) VALUES
-(1, 2, '2020-10-24 01:47:30', '2020-10-24 01:47:30'),
-(1, 3, '2020-10-24 01:49:13', '2020-10-24 01:49:13'),
-(2, 2, '2020-10-24 01:47:30', '2020-10-24 01:47:30'),
-(2, 3, '2020-10-24 01:48:46', '2020-10-24 01:48:46'),
-(3, 1, '2020-10-24 01:47:07', '2020-10-24 01:47:07'),
-(3, 2, '2020-10-24 01:47:41', '2020-10-24 01:47:41'),
-(3, 3, '2020-10-24 01:48:46', '2020-10-24 01:48:46'),
-(4, 3, '2020-10-24 01:49:13', '2020-10-24 01:49:13'),
-(5, 2, '2020-10-24 01:48:06', '2020-10-24 01:48:06'),
-(5, 3, '2020-10-24 01:49:26', '2020-10-24 01:49:26'),
-(6, 3, '2020-10-24 01:49:26', '2020-10-24 01:49:26'),
-(7, 3, '2020-10-24 01:49:36', '2020-10-24 01:49:36'),
-(8, 2, '2020-10-24 01:48:06', '2020-10-24 01:48:06'),
-(8, 3, '2020-10-24 01:49:02', '2020-10-24 01:49:02'),
-(9, 2, '2020-10-24 01:47:41', '2020-10-24 01:47:41'),
-(9, 3, '2020-10-24 01:49:02', '2020-10-24 01:49:02'),
-(10, 3, '2020-12-05 06:52:28', '2020-12-05 06:52:28'),
-(11, 3, '2020-12-05 06:52:28', '2020-12-05 06:52:28'),
-(12, 3, '2020-12-05 06:52:38', '2020-12-05 06:52:38');
+(1, 2, '2020-12-15 04:49:51', '2020-12-15 04:49:51'),
+(1, 3, '2020-12-15 04:49:51', '2020-12-15 04:49:51'),
+(2, 2, '2020-12-15 04:49:51', '2020-12-15 04:49:51'),
+(2, 3, '2020-12-15 04:49:51', '2020-12-15 04:49:51'),
+(3, 1, '2020-12-15 04:49:51', '2020-12-15 04:49:51'),
+(3, 2, '2020-12-15 04:49:51', '2020-12-15 04:49:51'),
+(3, 3, '2020-12-15 04:49:51', '2020-12-15 04:49:51'),
+(4, 2, '2020-12-15 04:49:51', '2020-12-15 04:49:51'),
+(4, 3, '2020-12-15 04:49:51', '2020-12-15 04:49:51'),
+(5, 2, '2020-12-15 04:49:51', '2020-12-15 04:49:51'),
+(5, 3, '2020-12-15 04:49:51', '2020-12-15 04:49:51'),
+(6, 3, '2020-12-15 04:49:51', '2020-12-15 04:49:51'),
+(7, 2, '2020-12-15 04:49:51', '2020-12-15 04:49:51'),
+(7, 3, '2020-12-15 04:49:51', '2020-12-15 04:49:51'),
+(8, 2, '2020-12-15 04:49:51', '2020-12-15 04:49:51'),
+(8, 3, '2020-12-15 04:49:51', '2020-12-15 04:49:51'),
+(9, 2, '2020-12-15 04:49:51', '2020-12-15 04:49:51'),
+(9, 3, '2020-12-15 04:49:51', '2020-12-15 04:49:51'),
+(10, 3, '2020-12-15 04:49:51', '2020-12-15 04:49:51'),
+(11, 3, '2020-12-15 04:49:51', '2020-12-15 04:49:51');
 
 -- --------------------------------------------------------
 
@@ -163,8 +163,9 @@ CREATE TABLE `posts` (
 INSERT INTO `posts` (`id`, `title`, `text`, `type`, `img_src`, `published`, `created_at`, `updated_at`, `deleted_at`, `user_id`) VALUES
 (1, 'test', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aspernatur illum in magnam mollitia nisi praesentium reiciendis ut voluptatibus? Accusamus alias atque commodi consequuntur cum debitis eaque eius fugit hic illum incidunt inventore laboriosam libero maxime necessitatibus nemo nostrum numquam odio officia, officiis pariatur qui quos repellendus suscipit, tempora ullam unde voluptas! Accusamus commodi consequatur cumque eligendi enim eos et id magni maiores, maxime minus nihil nisi numquam officiis omnis, provident quae repudiandae ullam unde velit. Ab aliquam at aut autem culpa cum dignissimos enim illo, ipsum iure nisi, quod sit sunt. Ab ad architecto asperiores doloremque eos fuga, ipsa, ipsam non porro qui quos sapiente sit tempore voluptas voluptatem? Accusantium architecto consectetur corporis eius est excepturi in ipsum, magni nesciunt placeat quaerat quis quo quod sit, totam unde voluptate! Assumenda dolore doloremque error facilis mollitia nihil nisi quia quis veniam voluptas. Dolore dolorem harum neque voluptate! A aliquam amet aspernatur at blanditiis cumque ducimus, ea exercitationem inventore mollitia nemo odit pariatur perspiciatis quasi ratione sequi suscipit. Ad autem iusto quaerat quia quod reprehenderit sit. Accusantium aperiam architecto at debitis ea eos id incidunt, laborum laudantium nesciunt numquam optio pariatur quibusdam, quos sint velit vero voluptas voluptatibus. Ad animi assumenda blanditiis consectetur deserunt, distinctio doloribus eaque eligendi est ex, ipsa laudantium libero nemo nihil officiis quia quisquam ratione reiciendis sapiente, sint. Alias commodi deleniti, deserunt dolor earum et fugit, id libero magnam minus modi, nobis odio quaerat quibusdam quidem quisquam soluta. Alias, animi assumenda atque, aut blanditiis consequatur consequuntur cum deserunt, eaque eligendi esse exercitationem hic impedit iusto labore libero magnam necessitatibus nulla officiis omnis reiciendis rerum tempore unde velit vitae? Alias at consectetur culpa debitis doloribus eligendi enim eos eum excepturi expedita fugit illo ipsa iste magnam molestiae mollitia nam necessitatibus nihil provident quo ratione repellendus, rerum saepe sint soluta tempora unde voluptatum. Consectetur impedit in neque odio odit! A aperiam aspernatur assumenda ea fuga illo, impedit maiores nemo perferendis quis quod recusandae repellendus saepe temporibus tenetur ullam vitae. Ab animi asperiores aut corporis dolor exercitationem expedita, explicabo incidunt libero maxime nihil sint, vel voluptate? Aliquid amet aperiam corporis dolor, dolorum eius esse ex inventore iste magnam maxime minima nesciunt nostrum obcaecati omnis quaerat recusandae repudiandae, saepe sint totam vel voluptate voluptatibus? Blanditiis dolores doloribus, error est fuga ipsa magnam non numquam possimus, rem, rerum temporibus? Architecto dignissimos doloremque ducimus eaque et eum id impedit ipsam, numquam odit quia sunt unde vel veritatis voluptatibus. Accusamus aspernatur assumenda autem cum dolorum eligendi, modi molestias, nisi obcaecati provident, quia quis quod repellendus reprehenderit voluptate? Ab asperiores atque autem deserunt eveniet excepturi inventore necessitatibus nobis praesentium quam, quidem quis repellat repellendus suscipit veritatis voluptas voluptatem voluptatum! Adipisci aliquid animi cum magnam sapiente. Nobis.', 'post', '\\articles\\5fb61171c14cc.jpg', 1, '2020-11-18 01:39:34', '2020-11-18 23:32:17', NULL, 1),
 (2, 'тестовая статья 2', 'Значимость этих проблем настолько очевидна, что консультация с широким активом позволяет выполнять важные задания по разработке направлений прогрессивного развития. Значимость этих проблем настолько очевидна, что реализация намеченных плановых заданий позволяет оценить значение модели развития.\r\n\r\nС другой стороны начало повседневной работы по формированию позиции позволяет оценить значение систем массового участия. Повседневная практика показывает, что начало повседневной работы по формированию позиции требуют от нас анализа существенных финансовых и административных условий.\r\n\r\nПовседневная практика показывает, что дальнейшее развитие различных форм деятельности позволяет оценить значение дальнейших направлений развития. Равным образом рамки и место обучения кадров способствует подготовки и реализации дальнейших направлений развития. Идейные соображения высшего порядка, а также начало повседневной работы по формированию позиции в значительной степени обуславливает создание направлений прогрессивного развития.', 'post', '\\articles\\5fb5fa99c0cc7.jpg', 1, '2020-11-18 21:54:49', '2020-11-24 21:51:14', NULL, 1),
-(3, 'Простая статья', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Magni provident quo voluptatibus! Atque consectetur deleniti distinctio maxime optio recusandae reiciendis repudiandae similique suscipit tempore. Aut culpa delectus dolores doloribus et excepturi expedita impedit molestiae nesciunt quia, velit vitae. Adipisci alias atque autem blanditiis commodi dicta dolor eos eveniet ex fugit hic id illo in inventore ipsam labore magni, minima molestias nihil nisi, odio officiis pariatur repellat, saepe tempore ut voluptas? Asperiores autem consequuntur culpa cum deleniti dolores eaque eligendi eum hic saepe. Aliquam cumque dignissimos dolor enim est, excepturi id laboriosam libero minus molestiae nemo provident, rem sit tempora velit vero voluptatem? Debitis dolor doloribus ex facere illo minus nisi nobis quos rem ullam! A corporis cumque dicta, ducimus facilis fugiat ipsa, mollitia nemo odit officiis quos rerum sapiente vel veniam voluptatibus. A accusamus architecto dolore impedit molestias nobis nostrum. Aut est, quo! A atque cupiditate dignissimos dolorem eligendi, incidunt iure, labore officia omnis quam quas quasi quidem, quos repellat repellendus. Accusantium aliquam cumque hic, ipsam odio pariatur praesentium sed tempore vitae! Alias deserunt explicabo laborum non officia, perspiciatis quasi voluptatem. Consequatur delectus eius et modi mollitia pariatur qui! Adipisci doloribus dolorum explicabo hic impedit minima, nemo nobis provident veniam voluptatum! Amet, architecto corporis cumque dolore exercitationem ipsam iure maxime natus neque quia reiciendis sunt? Ducimus impedit itaque odio possimus recusandae rerum! Assumenda deserunt qui recusandae reiciendis tenetur! Amet aut consequatur consequuntur eaque eius, explicabo fuga fugit harum impedit ipsa iste itaque iusto, laborum modi necessitatibus neque nesciunt, nostrum perspiciatis ratione recusandae reiciendis rerum tempora temporibus tenetur veritatis? Itaque, magnam nemo pariatur perferendis recusandae voluptates. Atque consectetur consequatur, cumque impedit optio quibusdam sapiente. A ab accusamus ad adipisci aliquid aspernatur aut culpa dolore ea eius eum, excepturi fuga fugit hic incidunt ipsa maiores nam nesciunt nihil nisi odio, officia perspiciatis possimus sapiente sint totam voluptas voluptatum? Et impedit quas quos? Accusamus asperiores beatae consequatur cupiditate dolores, doloribus esse et expedita, ipsa ipsum iure labore laborum magnam maxime minus necessitatibus nemo obcaecati odit quis rem temporibus vel veritatis vero! A dolores harum tempore? Aliquid aperiam architecto asperiores assumenda consectetur dolore doloribus eius et expedita fugiat hic illum impedit inventore labore libero molestias necessitatibus nemo, neque nulla officia quaerat quos ratione rem saepe suscipit ut vel vero. Atque consequuntur iste nulla optio repellat ullam. Adipisci et nemo nisi voluptatum? Assumenda blanditiis distinctio dolorem et fugit ipsum, iste magni nesciunt nulla quam sequi similique, tempora. A animi cupiditate delectus enim eveniet molestias nulla quas similique velit vero. Consequuntur enim fugiat illum inventore necessitatibus neque nostrum placeat quaerat, quam reiciendis repellendus sint tenetur voluptatibus. Accusantium adipisci asperiores assumenda dolorem eligendi enim eos et, eveniet illum minima officiis perferendis rem sint vero voluptatum? Animi assumenda debitis dolor ea earum fugiat illum in inventore ipsa, iusto libero nisi, odio placeat praesentium rem sint, voluptas. Assumenda cupiditate illo nam unde. Adipisci beatae, cumque laboriosam nobis quaerat quas ut? Ab aliquam beatae cum, delectus, eveniet ex impedit iure laborum, neque nobis perferendis porro quae quibusdam tempora veritatis voluptatibus?', 'post', NULL, 1, '2020-11-19 16:51:25', '2020-11-19 16:51:25', NULL, 1),
-(8, 'Статья для удаления', 'Большая статья об удалении', 'post', '\\articles\\5fbdec9894e58.png', 0, '2020-11-24 22:33:12', '2020-11-24 22:33:41', '2020-11-24 22:33:41', 1);
+(3, 'Простая статья', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Magni provident quo voluptatibus! Atque consectetur deleniti distinctio maxime optio recusandae reiciendis repudiandae similique suscipit tempore. Aut culpa delectus dolores doloribus et excepturi expedita impedit molestiae nesciunt quia, velit vitae. Adipisci alias atque autem blanditiis commodi dicta dolor eos eveniet ex fugit hic id illo in inventore ipsam labore magni, minima molestias nihil nisi, odio officiis pariatur repellat, saepe tempore ut voluptas? Asperiores autem consequuntur culpa cum deleniti dolores eaque eligendi eum hic saepe. Aliquam cumque dignissimos dolor enim est, excepturi id laboriosam libero minus molestiae nemo provident, rem sit tempora velit vero voluptatem? Debitis dolor doloribus ex facere illo minus nisi nobis quos rem ullam! A corporis cumque dicta, ducimus facilis fugiat ipsa, mollitia nemo odit officiis quos rerum sapiente vel veniam voluptatibus. A accusamus architecto dolore impedit molestias nobis nostrum. Aut est, quo! A atque cupiditate dignissimos dolorem eligendi, incidunt iure, labore officia omnis quam quas quasi quidem, quos repellat repellendus. Accusantium aliquam cumque hic, ipsam odio pariatur praesentium sed tempore vitae! Alias deserunt explicabo laborum non officia, perspiciatis quasi voluptatem. Consequatur delectus eius et modi mollitia pariatur qui! Adipisci doloribus dolorum explicabo hic impedit minima, nemo nobis provident veniam voluptatum! Amet, architecto corporis cumque dolore exercitationem ipsam iure maxime natus neque quia reiciendis sunt? Ducimus impedit itaque odio possimus recusandae rerum! Assumenda deserunt qui recusandae reiciendis tenetur! Amet aut consequatur consequuntur eaque eius, explicabo fuga fugit harum impedit ipsa iste itaque iusto, laborum modi necessitatibus neque nesciunt, nostrum perspiciatis ratione recusandae reiciendis rerum tempora temporibus tenetur veritatis? Itaque, magnam nemo pariatur perferendis recusandae voluptates. Atque consectetur consequatur, cumque impedit optio quibusdam sapiente. A ab accusamus ad adipisci aliquid aspernatur aut culpa dolore ea eius eum, excepturi fuga fugit hic incidunt ipsa maiores nam nesciunt nihil nisi odio, officia perspiciatis possimus sapiente sint totam voluptas voluptatum? Et impedit quas quos? Accusamus asperiores beatae consequatur cupiditate dolores, doloribus esse et expedita, ipsa ipsum iure labore laborum magnam maxime minus necessitatibus nemo obcaecati odit quis rem temporibus vel veritatis vero! A dolores harum tempore? Aliquid aperiam architecto asperiores assumenda consectetur dolore doloribus eius et expedita fugiat hic illum impedit inventore labore libero molestias necessitatibus nemo, neque nulla officia quaerat quos ratione rem saepe suscipit ut vel vero. Atque consequuntur iste nulla optio repellat ullam. Adipisci et nemo nisi voluptatum? Assumenda blanditiis distinctio dolorem et fugit ipsum, iste magni nesciunt nulla quam sequi similique, tempora. A animi cupiditate delectus enim eveniet molestias nulla quas similique velit vero. Consequuntur enim fugiat illum inventore necessitatibus neque nostrum placeat quaerat, quam reiciendis repellendus sint tenetur voluptatibus. Accusantium adipisci asperiores assumenda dolorem eligendi enim eos et, eveniet illum minima officiis perferendis rem sint vero voluptatum? Animi assumenda debitis dolor ea earum fugiat illum in inventore ipsa, iusto libero nisi, odio placeat praesentium rem sint, voluptas. Assumenda cupiditate illo nam unde. Adipisci beatae, cumque laboriosam nobis quaerat quas ut? Ab aliquam beatae cum, delectus, eveniet ex impedit iure laborum, neque nobis perferendis porro quae quibusdam tempora veritatis voluptatibus?', 'post', NULL, 1, '2020-11-19 16:51:25', '2020-12-15 18:59:03', NULL, 1),
+(8, 'Статья для удаления', 'Большая статья об удалении', 'post', '\\articles\\5fbdec9894e58.png', 0, '2020-11-24 22:33:12', '2020-11-24 22:33:41', '2020-11-24 22:33:41', 1),
+(9, 'Политика конфидициальности', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Animi distinctio, dolorum eius enim excepturi expedita facilis illo, impedit ipsam labore magni maxime nemo, neque porro quidem repellendus sequi tempora tenetur voluptatibus voluptatum? Aut, deleniti dolor id nesciunt qui ratione unde. Alias, aut autem dolor eius facilis illo in ipsa labore necessitatibus perspiciatis, quam quibusdam quo velit voluptas voluptatibus? Beatae cum doloribus id inventore quos recusandae sunt? Adipisci consequuntur delectus dolor nesciunt sunt? Aliquid ducimus eligendi eum iste minima sed sit veritatis! Accusantium aperiam commodi debitis dolor dolorem doloribus dolorum ducimus earum ex facere, illum inventore ipsum molestiae natus non odio perferendis perspiciatis quas qui recusandae saepe similique sit sunt vel voluptatibus. Architecto beatae cum enim eos expedita in iste magnam modi mollitia nemo nihil nostrum praesentium repudiandae rerum, sed suscipit vitae. Aperiam eius eveniet fugiat illum, mollitia odit quo tenetur unde voluptatibus! Dolorem facere illum iure odit officia quo reprehenderit veritatis! Aliquam animi cum cumque debitis dignissimos dolore doloremque earum excepturi impedit magnam maxime minus praesentium, qui repellendus rerum sed sunt unde voluptates? Atque blanditiis ducimus ex incidunt nihil, odio possimus voluptate voluptatum. Adipisci architecto cumque cupiditate deleniti dolores eaque excepturi facere facilis illo incidunt labore mollitia nihil optio quae quam quasi quibusdam ratione repellendus sed sequi, soluta tempore voluptatibus? Hic illum ipsa saepe sit. Ipsa, ut vel. Dolor dolorum earum, in iusto laborum laudantium maxime nam nulla, optio quas repellat rerum saepe similique sit suscipit tempora veniam. Asperiores assumenda atque commodi, deleniti doloremque, eos error, facilis harum incidunt iste magnam magni maxime nihil nisi nulla officiis quia ratione recusandae repellendus similique suscipit tempore temporibus totam unde veritatis voluptas voluptates voluptatum. Autem cupiditate, debitis dignissimos doloremque doloribus, dolorum error facilis, harum incidunt iste labore laboriosam minus necessitatibus obcaecati odit praesentium quos ratione tenetur? Ad adipisci atque, commodi cumque debitis dicta eveniet explicabo fugit, ipsam ipsum labore laboriosam magnam maiores modi nam nesciunt nostrum praesentium quam quia quod quos ratione reiciendis sed sunt ullam veniam voluptas! Alias aspernatur at atque autem consequuntur debitis, deserunt eaque earum enim esse eum eveniet, iusto laborum libero magni maxime molestiae nemo perspiciatis praesentium quae ratione sed soluta sunt tempore veritatis voluptas voluptates? Dolores eaque harum modi molestiae odit perferendis soluta tenetur ullam. A ab adipisci dicta dolorum ducimus eum, inventore minus nemo neque, nostrum quod quos repudiandae, sequi similique tempora temporibus vitae voluptatum. Architecto autem blanditiis culpa, delectus ducimus ipsum iusto minus, modi porro quibusdam sapiente sequi. Amet dignissimos id incidunt laudantium magnam optio repellat similique tempore tenetur ullam? Animi architecto at atque beatae consequuntur cum, delectus dolore doloremque eaque earum eligendi esse eveniet facere facilis fuga in inventore, itaque magni molestiae mollitia nam obcaecati odio officiis, placeat possimus praesentium provident quis quod quos sequi soluta sunt tenetur velit! Accusamus, adipisci alias aliquid animi architecto consequuntur delectus, dicta dignissimos ea excepturi explicabo fugit impedit labore magnam minus nemo optio porro provident quaerat quas quidem quo quos repellat saepe soluta tenetur voluptatem. Adipisci esse iusto, laboriosam magni minima minus neque non quam quo quos, sequi ut!', 'page', NULL, 1, '2020-12-15 00:59:01', '2020-12-15 19:57:48', NULL, 1);
 
 -- --------------------------------------------------------
 
@@ -212,15 +213,18 @@ CREATE TABLE `settings` (
   `id` int(11) NOT NULL,
   `key` varchar(255) NOT NULL,
   `name` varchar(255) DEFAULT NULL,
-  `value` varchar(255) NOT NULL
+  `value` varchar(255) NOT NULL,
+  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Дамп данных таблицы `settings`
 --
 
-INSERT INTO `settings` (`id`, `key`, `name`, `value`) VALUES
-(1, 'result_per_page', 'Результатов на странице по умолчанию', '20');
+INSERT INTO `settings` (`id`, `key`, `name`, `value`, `created_at`, `updated_at`) VALUES
+(1, 'result_per_page', 'Результатов на странице по умолчанию', '20', '2020-12-16 02:48:17', '2020-12-15 19:48:31'),
+(2, 'privacy_policy', 'Политика конфидециальности', '/page/9', '2020-12-16 02:48:17', NULL);
 
 -- --------------------------------------------------------
 
@@ -272,7 +276,8 @@ INSERT INTO `user_role` (`user_id`, `role_id`, `created_at`, `updated_at`) VALUE
 (1, 3, '2020-10-24 07:10:45', '2020-10-24 07:10:45'),
 (2, 2, '2020-11-20 03:53:42', '2020-11-20 03:53:42'),
 (3, 1, '2020-11-20 03:52:57', '2020-11-20 03:52:57'),
-(4, 1, '2020-11-20 03:53:42', '2020-11-20 03:53:42');
+(4, 1, '2020-11-20 03:53:42', '2020-11-20 03:53:42'),
+(5, 1, '2020-12-10 04:45:56', '2020-12-10 04:45:56');
 
 --
 -- Индексы сохранённых таблиц
@@ -305,9 +310,7 @@ ALTER TABLE `permissions`
 -- Индексы таблицы `permission_role`
 --
 ALTER TABLE `permission_role`
-  ADD PRIMARY KEY (`permission_id`,`role_id`),
-  ADD KEY `fk_permissions_has_roles_roles1_idx` (`role_id`),
-  ADD KEY `fk_permissions_has_roles_permissions1_idx` (`permission_id`);
+  ADD PRIMARY KEY (`permission_id`,`role_id`);
 
 --
 -- Индексы таблицы `posts`
@@ -379,7 +382,7 @@ ALTER TABLE `permissions`
 -- AUTO_INCREMENT для таблицы `posts`
 --
 ALTER TABLE `posts`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT для таблицы `post_category`
@@ -397,7 +400,7 @@ ALTER TABLE `roles`
 -- AUTO_INCREMENT для таблицы `settings`
 --
 ALTER TABLE `settings`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT для таблицы `users`
@@ -424,11 +427,10 @@ ALTER TABLE `comments`
   ADD CONSTRAINT `fk_posts_comments` FOREIGN KEY (`post_id`) REFERENCES `posts` (`id`) ON DELETE CASCADE;
 
 --
--- Ограничения внешнего ключа таблицы `permission_role`
+-- Ограничения внешнего ключа таблицы `permissions`
 --
-ALTER TABLE `permission_role`
-  ADD CONSTRAINT `fk_permissions_has_roles_permissions1` FOREIGN KEY (`permission_id`) REFERENCES `permissions` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_permissions_has_roles_roles1` FOREIGN KEY (`role_id`) REFERENCES `roles` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+ALTER TABLE `permissions`
+  ADD CONSTRAINT `fk_permission_role` FOREIGN KEY (`id`) REFERENCES `permission_role` (`permission_id`) ON DELETE CASCADE;
 
 --
 -- Ограничения внешнего ключа таблицы `posts`

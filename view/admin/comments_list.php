@@ -12,14 +12,24 @@
 
             <?php foreach ($comments as $comment): ?>
                 <div class="row">
-                    <div class="col s12">
+                    <div class="col s12 comments">
                         <div class="card horizontal z-depth-0 comment" data-id="<?= $comment->id ?>">
                             <div class="card-image">
-                                <img src="https://lorempixel.com/100/190/nature/6">
+                                <a href="/profile/<?= $comment->user->id ?>">
+                                    <?php if ($comment->user->avatar && file_exists(UPLOAD_DIR . $comment->user->avatar)): ?>
+                                        <img src="/<?= UPLOAD_DIR_NAME . $comment->user->avatar ?>"
+                                             alt="<?= $comment->user->username ?>" class="avatar">
+                                    <?php else: ?>
+                                        <img src="/static/img/empty-avatar.jpg" class="avatar"
+                                             alt="<?= $comment->user->username ?>">
+                                    <?php endif; ?>
+                                </a>
                             </div>
                             <div class="card-stacked">
                                 <div class="card-content">
-                                    <span class="card-title"><?= $comment->user->username ?></span>
+                                    <a href="/profile/<?= $comment->user->id ?>">
+                                        <span class="card-title"><?= $comment->user->username ?></span>
+                                    </a>
                                     <p><?= $comment->text; ?></p>
                                     <?php if (!$comment->moderated): ?>
                                         <span class="help-text">Комментарий не был модерирован</span>

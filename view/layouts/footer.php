@@ -1,4 +1,4 @@
-    </div>
+</div>
 </div>
 <footer class="page-footer">
     <div class="container">
@@ -8,11 +8,10 @@
                     унивирситета SkillBox</p></div>
             <div class="col l4 offset-l2 s12">
                 <ul class="menu">
-                    <li class="menu__item menu__item_active"><a href="/">Главная</a></li>
-                    <li class="menu__item"><a href="/">Страница 1</a></li>
-                    <li class="menu__item"><a href="/">Страница 2</a></li>
-                    <li class="menu__item"><a href="/">Страница 3</a></li>
-                    <li class="menu__item"><a href="/">Страница 4</a></li>
+                    <li class="menu__item"><a href="/">Главная</a></li>
+                    <li class="menu__item"><a
+                            href="<?= \App\Settings::getInstance()->get('privacy_policy', '#') ?>">Политика
+                            конфидециальности</a></li>
                 </ul>
             </div>
         </div>

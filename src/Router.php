@@ -107,9 +107,7 @@ class Router
         $getArr = Request::get();
 
         $getArr = array_merge($getArr, $newParams);
-
         $query = http_build_query($getArr);
-
         return self::getPath().'?'.$query;
     }
 }

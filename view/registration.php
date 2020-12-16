@@ -51,7 +51,7 @@
                         <input type="checkbox" name="accept_rules"
                                class="validate <?= isset($errors['accept_rules']) ? 'invalid' : '' ?>" <?= (isset($request['accept_rules']) && $request['accept_rules']) ? 'checked' : '' ?>
                                required>
-                        <span>Согласен с <a href="#" target="_blank">правилами</a> сайта</span>
+                        <span>Согласен с <a href="<?=\App\Settings::getInstance()->get('privacy_policy', '#')?>" target="_blank">правилами</a> сайта</span>
                     </label>
                     <?php isset($errors['accept_rules']) ? printInputErrors($errors['accept_rules']) : '' ?>
                 </div>

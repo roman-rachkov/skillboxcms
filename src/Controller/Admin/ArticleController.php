@@ -13,7 +13,7 @@ use App\View\View;
 
 class ArticleController extends BaseController
 {
-    public function indexAction(): View
+    public function indexAction(string $t): View
     {
         if (!isset($_SESSION['user']) || !$_SESSION['user']->canDo('edit_articles')) {
             throw new AccessDeniedException('Доступ запрещен!');
@@ -22,15 +22,15 @@ class ArticleController extends BaseController
         $type = Request::get('type');
         $type = is_array($type) ? 'all' : $type;
 
+        $posts = null;
         if ($type == 'trashed') {
-            $posts = Post::onlyTrashed()->where('type', 'post');
+            $posts = Post::onlyTrashed();
         } elseif ($type == 'unpublished') {
-            $posts = Post::where('published', false)->where('type', 'post');
+            $posts = Post::where('published', false);
         } elseif ($type == 'published') {
-            $posts = Post::where('published', true)->where('type', 'post');
-        } else {
-            $posts = Post::where('type', 'post');
+            $posts = Post::where('published', true);
         }
+        $posts = $posts?->where('type', $t) ?? Post::where('type', $t);
 
         $paginate = Request::get('perpage');
         $paginate = is_array($paginate) ? Settings::getInstance()->get(
@@ -44,16 +44,17 @@ class ArticleController extends BaseController
         $posts = $posts->orderByDesc('created_at');
 
         if ($paginate != 'all') {
-            $posts = $posts->paginate($paginate, ['*'], 'page', $page)->setPath('/admin');
+            $posts = $posts->paginate($paginate, page: $page)->setPath('/admin');
         } else {
             $posts = $posts->all();
         }
         return new View(
             'admin/post_list',
             [
-                'title' => "Список постов",
+                'title' => "Список ".($t == 'post' ? 'статей' : 'страниц'),
                 'pageClass' => 'admin',
-                'articles' => $posts
+                'articles' => $posts,
+                'type' => $t
             ]
         );
     }
@@ -72,20 +73,60 @@ class ArticleController extends BaseController
             $article = new Post();
             $article->title = $post['title'];
             $article->text = $post['text'];
-            $article->type = 'post';
+            $article->type = $post['type'];
 
-            $image = tryToUploadFile('image', 'articles');
+            $image = tryToUploadFile('image', ($post['type'] == 'post' ? 'articles' : 'pages'));
             if ($image) {
-                $article->img_src = DIRECTORY_SEPARATOR . 'articles' . DIRECTORY_SEPARATOR . $image['name'];
+                $article->img_src = DIRECTORY_SEPARATOR . ($post['type'] == 'post' ? 'articles' : 'pages') . DIRECTORY_SEPARATOR . $image['name'];
             }
             if ($_SESSION['user']->articles()->save($article)) {
-                setSuccess('Статья успешно создана');
-                redirect('/article/' . $article->id);
+                setSuccess(($post['type'] == 'post' ? 'Статья' : 'Страница') . ' успешно создана');
+                redirect(($post['type'] == 'post' ? '/article/' : '/page/') . $article->id);
             } else {
                 setError('Что то пошло не так');
             }
         }
-        return new View('/admin/post', ['title' => 'Новая статья', 'errors' => $validator->errors(), 'request' => $post]);
+
+        return new View('/admin/post',
+            ['title' => $post['type'] == 'post' ? 'Новая статья' : 'Новая странциа',
+                'errors' => $validator->errors(),
+                'request' => $post]
+        );
+    }
+
+    public function editAction(): View
+    {
+        if (!isset($_SESSION['user']) || !$_SESSION['user']->canDo('edit_articles')) {
+            throw new AccessDeniedException('Доступ запрещен');
+        }
+
+        $post = Request::post();
+
+        $validator = new ArticleValidator($post);
+
+        if ($validator->validate()) {
+            $article = Post::find($post['id']);
+            $article->title = $post['title'];
+            $article->text = $post['text'];
+            $article->type = $post['type'];
+
+            $image = tryToUploadFile('image', ($post['type'] == 'post' ? 'articles' : 'pages'));
+            if ($image) {
+                $article->img_src = DIRECTORY_SEPARATOR . ($post['type'] == 'post' ? 'articles' : 'pages') . DIRECTORY_SEPARATOR . $image['name'];
+            }
+            if ($_SESSION['user']->articles()->save($article)) {
+                setSuccess(($post['type'] == 'post' ? 'Статья' : 'Страница') . ' успешно обновлена');
+                redirect(($post['type'] == 'post' ? '/article/' : '/page/') . $article->id);
+            } else {
+                setError('Что то пошло не так');
+            }
+        }
+
+        return new View('/admin/post',
+            ['title' => $post['type'] == 'post' ? 'Редактировать статью' : 'Редактировать Страницу',
+                'errors' => $validator->errors(),
+                'request' => $post]
+        );
     }
 
     public function unpublishAction(int $id)

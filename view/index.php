@@ -1,8 +1,6 @@
 <?php
-includeView('layouts/header', ['title' => 'Главная']);
+includeView('layouts/header', ['title' => 'Список статей']);
 ?>
-    <h1>Главная</h1>
-    <hr>
     <div class="row">
         <?php if (!isset($_SESSION['user']) || !$_SESSION['user']->subscribed): ?>
 

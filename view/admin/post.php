@@ -1,23 +1,23 @@
 <?php includeView('/layouts/header', ['title' => $title, 'pageClass' => $pageClass]); ?>
-    <H1 class="center-align"><?= $title ?></H1>
     <div class="row">
-        <form class="col s12" <?= isset($article) ? 'action="/admin/edit"' : 'action="/admin/new"' ?> method="post"
+        <form class="col s12" action="/admin/<?= $type == 'post' ? '' : 'static/' ?><?= isset($article) ? 'edit' : 'new' ?>" method="post"
               enctype="multipart/form-data">
             <div class="row">
                 <div class="input-field col s12">
                     <?= isset($article) ? '<input name="id" type="hidden" value="' . $article->id . '">' : '' ?>
                     <input type="text" name="title" placeholder="Золотая статья о дожде" class="validate"
                            id="article-title" required <?= isset($article) ? 'value="' . $article->title . '"' : '' ?>>
-                    <label for="article-title">Заголовок статьи</label>
+                    <label for="article-title">Заголовок <?= $type == 'post' ? 'статьи' : 'страницы' ?></label>
                 </div>
 
             </div>
             <div class="row">
+                <input type="hidden" name="type" value="<?= $type ?>">
                 <div class="input-field col s12">
                     <textarea id="textarea1" class="materialize-textarea validate"
                               placeholder="Большой и интересный текст о дожде" name="text"
                               required><?= isset($article) ? $article->text : '' ?></textarea>
-                    <label for="textarea1">Статья</label>
+                    <label for="textarea1"><?= $type == 'post' ? 'Статья' : 'Страница' ?></label>
                 </div>
             </div>
             <?php if (isset($article) && $article->img_src): ?>
@@ -56,4 +56,4 @@
     </div>
 
 
-<?php includeView('/layouts/admin_footer'); ?>
+<?php includeView('/layouts/footer'); ?>

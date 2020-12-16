@@ -16,7 +16,7 @@
                 <div class="file-field input-field">
                     <div class="btn">
                         <span>File</span>
-                        <input type="file" name="avatar">
+                        <input type="file" name="avatar" accept="image/png, image/jpeg">
                     </div>
                     <div class="file-path-wrapper">
                         <input class="file-path validate" type="text">
@@ -64,9 +64,10 @@
             <h4><?=$user->username?></h4>
             <p><?=$user->email?></p>
             <p><?=$user->about?></p>
-            <p>Всего комментариев: <?=$user->comments->where('moderated', true)->count()?></p>
 
             <?php endif; ?>
+            <p>Всего комментариев: <?=$user->comments->where('moderated', true)->count()?></p>
+
         </div>
 
     </div>
