@@ -42,7 +42,7 @@
                         </td>
                         <td>
                             <a href="/admin/users/update" class="tooltipped update-user" data-tooltip="Сохранить изменения"><i class="material-icons tiny">save</i></a>
-                            <a href="/admin/users/edit/<?=$user->id?>" class="tooltipped update-user" data-tooltip="Редактировать пользователя"><i class="material-icons tiny">edit</i></a>
+                            <a href="/admin/users/edit/<?=$user->id?>" class="tooltipped " data-tooltip="Редактировать пользователя"><i class="material-icons tiny">edit</i></a>
                         </td>
                     </tr>
             <?php endforeach; ?>

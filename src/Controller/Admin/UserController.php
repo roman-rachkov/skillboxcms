@@ -86,4 +86,32 @@ class UserController extends BaseController
         setSuccess('Права успешно обновлены');
         redirect('/admin/permissions');
     }
+
+    public function updateAction()
+    {
+
+        if (!$_SESSION['user']->canDo('edit_user')) {
+            setError('Доступ запрещен');
+        }
+
+        $post = Request::post();
+        debug($post);
+        $user = User::find($post['id']);
+
+        if (!$user) {
+            setError('Пользователь не найден');
+        } else {
+            $user->roles()->detach();
+
+            foreach ($post['values'] as $value){
+                $role = Role::where('key', $value)->first();
+                $user->roles()->attach($role);
+            }
+            setSuccess('Роли пользователя '.$user->username.' успешно обновлены');
+        }
+
+
+        die('success');
+    }
+
 }

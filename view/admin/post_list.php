@@ -2,7 +2,7 @@
     <div class="row">
         <aside class="col l2 m4 hide-on-small-and-down">
             <div class="row">
-                <a href="/admin/<?=$type == 'post' ?:'static/' ?>new" class="btn waves-effect waves-light col s10 offset-s1"><?=$type == 'post' ? 'Новый пост':'Новая страница'?></a>
+                <a href="/admin/<?=$type == 'post' ?'':'static/' ?>new" class="btn waves-effect waves-light col s10 offset-s1"><?=$type == 'post' ? 'Новый пост':'Новая страница'?></a>
             </div>
             <?php includeView('layouts/per_page_select', ['paginator' => $articles]); ?>
         </aside>
@@ -57,3 +57,6 @@
 <?php includeView('layouts/pagination', ['paginator' => $articles]); ?>
 
 <?php includeView('layouts/footer', []); ?>
+
+
+

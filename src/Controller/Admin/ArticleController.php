@@ -6,6 +6,7 @@ use App\Config;
 use App\Exception\AccessDeniedException;
 use App\Exception\NotFoundException;
 use App\Model\Post;
+use App\Model\User;
 use App\Request;
 use App\Settings;
 use App\Validators\ArticleValidator;
@@ -81,11 +82,18 @@ class ArticleController extends BaseController
             }
             if ($_SESSION['user']->articles()->save($article)) {
                 setSuccess(($post['type'] == 'post' ? 'Статья' : 'Страница') . ' успешно создана');
+                if($post['type'] == 'post'){
+                    foreach (User::where('subscribed', true)->get() as $user){
+                        sendMailToSubscribers($user->email, $article);
+                    }
+                }
                 redirect(($post['type'] == 'post' ? '/article/' : '/page/') . $article->id);
             } else {
                 setError('Что то пошло не так');
             }
         }
+
+
 
         return new View('/admin/post',
             ['title' => $post['type'] == 'post' ? 'Новая статья' : 'Новая странциа',

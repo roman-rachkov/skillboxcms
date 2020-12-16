@@ -6,9 +6,10 @@
  * Time: 12:35
  */
 
-define('DEBUG', false);
+define('DEBUG', true);
 define('APP_DIR', $_SERVER['DOCUMENT_ROOT']);
 define('CONFIG_DIR', APP_DIR . DIRECTORY_SEPARATOR . 'configs');
+define('LOG_DIR', APP_DIR . DIRECTORY_SEPARATOR . 'logs');
 define('VIEW_DIR', APP_DIR . DIRECTORY_SEPARATOR . 'view');
 define('DB_DRIVER', 'mysql');
 

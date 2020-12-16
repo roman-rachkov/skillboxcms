@@ -72,6 +72,16 @@ function setNormalSlashes($str)
 }
 
 /**
+ * Заменяет все слэши на прямые
+ * @param $str
+ * @return mixed
+ */
+function setForwardSlashes($str)
+{
+    return str_replace(array('/', '\\'), '/', $str);
+}
+
+/**
  * Возвращает из многомерного массива эллемент по ключу разделенного "."
  * @param array $array
  * @param string $key
@@ -111,7 +121,7 @@ function includeView($templateName, $data = [])
         extract($data);
         require $file;
     } else {
-        debug('Файл шаблона '.$file.' не существует');
+        debug('Файл шаблона ' . $file . ' не существует');
     }
 }
 
@@ -237,7 +247,7 @@ function printSuccess()
  */
 function tryToUploadFile(string $key, string $path, array $mimetypes = ['image/png', 'image/jpeg', 'image/gif'], string $size = '5M'): bool|array
 {
-    if(empty(\App\Request::files($key)['name'])){
+    if (empty(\App\Request::files($key)['name'])) {
         return false;
     }
 
@@ -283,4 +293,51 @@ function humanFilesize($bytes, $decimals = 2): string
     return sprintf("%.{$decimals}f", $bytes / pow(1024, $factor)) . @$sz[$factor];
 }
 
-?>
+
+/**
+ * Оправляет Сообщение подписчику о новой статье
+ * @param string $to
+ * @param string $subject
+ * @param string $message
+ */
+function sendMailToSubscribers(string $to, \App\Model\Post $article)
+{
+
+    $subject = 'На сайте добавлена новая запись: “' . $article->title . '”';
+
+    $body = 'Новая статья: ' . $article->title . PHP_EOL;
+    $body .= shortString($article->text, 300) . PHP_EOL;
+    $body .= '<a href="/article/' . $article->id . '">Читать</a>';
+    sendMail($to, $subject, $body);
+}
+
+/**
+ * Отправляет новый email
+ * @param string $to
+ * @param string $subject
+ * @param string $message
+ */
+function sendMail(string $to, string $subject, string $message)
+{
+    $headers = [
+        'From' => 'subscribe@skillboxcms.loc',
+        'Reply-To' => '',
+        'X-Mailer' => 'PHP/' . phpversion()
+    ];
+//    mail($to, $subject, $message, $headers);
+
+    writeEmailLog(date('Y-m-d_H-i-s') . '_' .  $to, $subject . PHP_EOL . $message);
+}
+
+/**
+ * Записывает Лог емейла рассылки
+ * @param string $fileName
+ * @param string $body
+ */
+function writeEmailLog(string $fileName, string $body)
+{
+    $dir = setForwardSlashes(LOG_DIR . DIRECTORY_SEPARATOR . 'mails' . DIRECTORY_SEPARATOR);
+    $fp = fopen($dir . $fileName . '.log', "w");
+    fwrite($fp, $body);
+    fclose($fp);
+}
