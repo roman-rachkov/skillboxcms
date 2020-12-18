@@ -8,7 +8,7 @@ use Valitron\Validator;
 
 class UserLoginValidator implements iValidator
 {
-    protected Validator $validator;
+    protected $validator;
 
     public function __construct(array $data)
     {

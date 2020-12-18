@@ -31,7 +31,7 @@ class ArticleController extends BaseController
         } elseif ($type == 'published') {
             $posts = Post::where('published', true);
         }
-        $posts = $posts?->where('type', $t) ?? Post::where('type', $t);
+        $posts = $posts ? $posts->where('type', $t) : Post::where('type', $t);
 
         $paginate = Request::get('perpage');
         $paginate = is_array($paginate) ? Settings::getInstance()->get(
@@ -45,14 +45,14 @@ class ArticleController extends BaseController
         $posts = $posts->orderByDesc('created_at');
 
         if ($paginate != 'all') {
-            $posts = $posts->paginate($paginate, page: $page)->setPath('/admin');
+            $posts = $posts->paginate($perPage = 15, ['*'], 'page', $page)->setPath('/admin');
         } else {
             $posts = $posts->all();
         }
         return new View(
             'admin/post_list',
             [
-                'title' => "Список ".($t == 'post' ? 'статей' : 'страниц'),
+                'title' => "Список " . ($t == 'post' ? 'статей' : 'страниц'),
                 'pageClass' => 'admin',
                 'articles' => $posts,
                 'type' => $t
@@ -82,8 +82,8 @@ class ArticleController extends BaseController
             }
             if ($_SESSION['user']->articles()->save($article)) {
                 setSuccess(($post['type'] == 'post' ? 'Статья' : 'Страница') . ' успешно создана');
-                if($post['type'] == 'post'){
-                    foreach (User::where('subscribed', true)->get() as $user){
+                if ($post['type'] == 'post') {
+                    foreach (User::where('subscribed', true)->get() as $user) {
                         sendMailToSubscribers($user->email, $article);
                     }
                 }
@@ -92,7 +92,6 @@ class ArticleController extends BaseController
                 setError('Что то пошло не так');
             }
         }
-
 
 
         return new View('/admin/post',

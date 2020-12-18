@@ -32,9 +32,9 @@ class UserController extends BaseController
             $users = User::where('unsubscribed', false);
         }
         if ($role != 'all') {
-            $users = $users?->whereHas('roles', function ($query) use ($role) {
+            $users = $users ? $users->whereHas('roles', function ($query) use ($role) {
                     $query->where('key', '=', $role);
-                }) ?? User::whereHas('roles', function ($query) use ($role) {
+                }) : User::whereHas('roles', function ($query) use ($role) {
                     $query->where('key', '=', $role);
                 });
         }
@@ -49,9 +49,9 @@ class UserController extends BaseController
         $page = is_array($page) ? 1 : $page;
 
         if ($paginate != 'all') {
-            $users = $users?->paginate($paginate, page: $page)?->setPath('/admin/users') ?? User::paginate($paginate, page: $page)->setPath('/admin/users');
+            $users = $users ? $users->paginate($perPage = 15, ['*'], 'page', $page)->setPath('/admin/users') : User::paginate($perPage = 15, ['*'], 'page', $page)->setPath('/admin/users');
         } else {
-            $users = $users?->all() ?? User::all();
+            $users = $users->all() ?? User::all();
         }
         return new View(
             'admin/users_list',
@@ -103,11 +103,11 @@ class UserController extends BaseController
         } else {
             $user->roles()->detach();
 
-            foreach ($post['values'] as $value){
+            foreach ($post['values'] as $value) {
                 $role = Role::where('key', $value)->first();
                 $user->roles()->attach($role);
             }
-            setSuccess('Роли пользователя '.$user->username.' успешно обновлены');
+            setSuccess('Роли пользователя ' . $user->username . ' успешно обновлены');
         }
 
 

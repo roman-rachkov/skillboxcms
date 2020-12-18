@@ -13,7 +13,7 @@ class Request
      * @param array $args
      * @return mixed
      */
-    public static function __callStatic(string $name, array $args): mixed
+    public static function __callStatic(string $name, array $args)
     {
         $key = '_' . strtoupper($name);
         if (array_key_exists($key, $GLOBALS)) {
@@ -31,7 +31,7 @@ class Request
      * @param mixed $data
      * @return mixed
      */
-    private static function prepareData(mixed $data): mixed
+    private static function prepareData($data)
     {
         if (is_array($data)) {
             $preparedArray = [];

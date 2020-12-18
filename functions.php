@@ -245,7 +245,7 @@ function printSuccess()
  * @param string $size
  * @return array|false
  */
-function tryToUploadFile(string $key, string $path, array $mimetypes = ['image/png', 'image/jpeg', 'image/gif'], string $size = '5M'): bool|array
+function tryToUploadFile(string $key, string $path, array $mimetypes = ['image/png', 'image/jpeg', 'image/gif'], string $size = '5M')
 {
     if (empty(\App\Request::files($key)['name'])) {
         return false;

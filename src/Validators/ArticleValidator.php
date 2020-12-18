@@ -7,7 +7,7 @@ use Valitron\Validator;
 
 class ArticleValidator implements iValidator
 {
-    protected Validator $validator;
+    protected $validator;
 
 
     public function __construct(array $data)

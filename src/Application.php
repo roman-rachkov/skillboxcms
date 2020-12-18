@@ -11,7 +11,7 @@ class Application
 {
     use TSingleton;
 
-    protected Router $router;
+    protected $router;
 
     /**
      * @return Router

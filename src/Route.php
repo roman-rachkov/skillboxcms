@@ -26,7 +26,7 @@ class Route
     /**
      * Подготавливает и выполняет метод если он сущевствует
      * @param $callback
-     * @return array
+     * @return array | callable
      * @throws HttpException
      */
     private function prepareCallback($callback)
@@ -70,7 +70,7 @@ class Route
      * @return mixed
      * @throws HttpException
      */
-    public function run($uri): mixed
+    public function run($uri)
     {
         if (preg_match('/^' . str_replace(['*', '/'], ['\w+', '\/'], $this->getPath()) . '$/', $uri, $matches)) {
             $arr = explode('/', $uri);
