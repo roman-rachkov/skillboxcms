@@ -2,7 +2,6 @@
 
 use JetBrains\PhpStorm\Pure;
 
-
 /**
  * Добавляет в сессию данные дебага, для последующего удобного вывода
  * @param mixed $var переменная
@@ -302,7 +301,6 @@ function humanFilesize($bytes, $decimals = 2): string
  */
 function sendMailToSubscribers(string $to, \App\Model\Post $article)
 {
-
     $subject = 'На сайте добавлена новая запись: “' . $article->title . '”';
 
     $body = 'Новая статья: ' . $article->title . PHP_EOL;

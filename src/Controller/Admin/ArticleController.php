@@ -94,7 +94,8 @@ class ArticleController extends BaseController
         }
 
 
-        return new View('/admin/post',
+        return new View(
+            '/admin/post',
             ['title' => $post['type'] == 'post' ? 'Новая статья' : 'Новая странциа',
                 'errors' => $validator->errors(),
                 'request' => $post]
@@ -129,7 +130,8 @@ class ArticleController extends BaseController
             }
         }
 
-        return new View('/admin/post',
+        return new View(
+            '/admin/post',
             ['title' => $post['type'] == 'post' ? 'Редактировать статью' : 'Редактировать Страницу',
                 'errors' => $validator->errors(),
                 'request' => $post]

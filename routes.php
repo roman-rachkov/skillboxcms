@@ -15,8 +15,8 @@ $router->get('/admin/settings', function () {
 
 //Users
 
-$router->get('/admin/users/edit/*', function (int $id){
-    if(!$_SESSION['user']->canDo(['VIEW_ADMIN', 'edit_user'], true)){
+$router->get('/admin/users/edit/*', function (int $id) {
+    if (!$_SESSION['user']->canDo(['VIEW_ADMIN', 'edit_user'], true)) {
         throw new \App\Exception\AccessDeniedException('Доступ запрещен');
     }
 
@@ -24,12 +24,11 @@ $router->get('/admin/users/edit/*', function (int $id){
 
     debug($user);
 
-    if(!$user){
+    if (!$user) {
         throw new \App\Exception\NotFoundException('Пользователь не найден');
     }
 
     return new App\View\View('profile', ['user' => $user]);
-
 });
 $router->post('/admin/users/update', 'App\Controller\Admin\User@update');
 $router->get('/admin/users', 'App\Controller\Admin\User@index');

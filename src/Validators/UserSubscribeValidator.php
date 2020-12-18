@@ -8,7 +8,7 @@ use Valitron\Validator;
 
 class UserSubscribeValidator implements iValidator
 {
-    protected  $validator;
+    protected $validator;
 
     public function __construct(array $data)
     {

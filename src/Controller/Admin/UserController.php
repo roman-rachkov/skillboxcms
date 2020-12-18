@@ -33,10 +33,10 @@ class UserController extends BaseController
         }
         if ($role != 'all') {
             $users = $users ? $users->whereHas('roles', function ($query) use ($role) {
-                    $query->where('key', '=', $role);
-                }) : User::whereHas('roles', function ($query) use ($role) {
-                    $query->where('key', '=', $role);
-                });
+                $query->where('key', '=', $role);
+            }) : User::whereHas('roles', function ($query) use ($role) {
+                $query->where('key', '=', $role);
+            });
         }
 
         $paginate = Request::get('perpage');
@@ -61,7 +61,6 @@ class UserController extends BaseController
                 'users' => $users
             ]
         );
-
     }
 
     public function permissionsAction()
@@ -89,7 +88,6 @@ class UserController extends BaseController
 
     public function updateAction()
     {
-
         if (!$_SESSION['user']->canDo('edit_user')) {
             setError('Доступ запрещен');
         }
@@ -113,5 +111,4 @@ class UserController extends BaseController
 
         die('success');
     }
-
 }
