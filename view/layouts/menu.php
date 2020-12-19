@@ -2,7 +2,7 @@
     <li class="menu__item <?= \App\Router::checkPath('/') ? ' menu__item_active' : '' ?>">
         <a href="/">Главная</a>
     </li>
-    <li class="menu__item  <?= mb_stripos(\App\Router::getPath(), '/page') !== false ? 'menu__item_active' : '' ?>">
+    <li class="menu__item <?= mb_stripos(\App\Router::getPath(), '/page') === 0 ? 'menu__item_active' : '' ?>">
         <a data-target="#drop-down-pages-menu" onclick=""
            class="dropdown-trigger <?= \App\Router::checkPath('/admin') ? 'active' : '' ?>">
             Страницы
@@ -13,7 +13,7 @@
         $activeAdmin = mb_stripos(\App\Router::getPath(), '/admin') !== false ? 'menu__item_active' : '';
         ?>
         <li class="menu__item <?= $activeAdmin ?>">
-            <a href="/admin">Админка</a>
+            <a href="/admin/post">Админка</a>
         </li>
     <?php endif; ?>
 </ul>

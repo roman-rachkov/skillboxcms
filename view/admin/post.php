@@ -1,6 +1,6 @@
 <?php includeView('/layouts/header', ['title' => $title, 'pageClass' => $pageClass]); ?>
     <div class="row">
-        <form class="col s12" action="/admin/<?= $type == 'post' ? '' : 'static/' ?><?= isset($article) ? 'edit' : 'new' ?>" method="post"
+        <form class="col s12" action="/admin/<?= $type.'/' ?><?= isset($article) ? 'edit' : 'new' ?>" method="post"
               enctype="multipart/form-data">
             <div class="row">
                 <div class="input-field col s12">

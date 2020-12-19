@@ -6,17 +6,17 @@
             <thead>
             <tr>
                 <th></th>
-                <?php foreach ($permissions as $permission): ?>
-                    <th><?= $permission->name ?></th>
+                <?php foreach ($roles as $role): ?>
+                    <th><?= $role->name ?></th>
                 <?php endforeach; ?>
             </tr>
             </thead>
 
             <tbody>
-            <?php foreach ($roles as $role): ?>
+            <?php foreach ($permissions as $permission): ?>
                 <tr>
-                    <td><b><?= $role->name ?></b></td>
-                    <?php foreach ($permissions as $permission): ?>
+                    <td><b><?= $permission->name ?></b></td>
+                    <?php foreach ($roles as $role): ?>
                         <td>
                             <label>
                                 <input type="checkbox" name="<?=$role->key?>[]"

@@ -4,7 +4,6 @@ namespace App\Controller\Admin;
 
 use App\Config;
 use App\Exception\AccessDeniedException;
-use App\Exception\NotFoundException;
 use App\Model\Post;
 use App\Model\User;
 use App\Request;
@@ -34,10 +33,9 @@ class ArticleController extends BaseController
         $posts = $posts ? $posts->where('type', $t) : Post::where('type', $t);
 
         $paginate = Request::get('perpage');
-        $paginate = is_array($paginate) ? Settings::getInstance()->get(
-            'result_per_page',
-            Config::getInstance()->get('default.result_per_page')
-        ) : $paginate;
+        $paginate = is_array($paginate) ?
+            Settings::getInstance()->get('result_per_page', Config::getInstance()->get('default.result_per_page'))
+            : $paginate;
 
         $page = Request::get('page');
         $page = is_array($page) ? 1 : $page;
@@ -60,9 +58,9 @@ class ArticleController extends BaseController
         );
     }
 
-    public function addAction(): View
+    public function createAction(string $t): View
     {
-        if (!isset($_SESSION['user']) || !$_SESSION['user']->canDo('create_articles')) {
+        if (!$_SESSION['user']->canDo('create_articles')) {
             throw new AccessDeniedException('Доступ запрещен');
         }
 
@@ -93,7 +91,6 @@ class ArticleController extends BaseController
             }
         }
 
-
         return new View(
             '/admin/post',
             ['title' => $post['type'] == 'post' ? 'Новая статья' : 'Новая странциа',
@@ -102,7 +99,32 @@ class ArticleController extends BaseController
         );
     }
 
-    public function editAction(): View
+    public function addAction(string $t)
+    {
+        if (!$_SESSION['user']->canDo('create_articles')) {
+            throw new AccessDeniedException('Доступ запрещен!');
+        }
+        return new View('admin/post', ['title' => "Новая статья", 'pageClass' => 'admin', 'type' => $t]);
+    }
+
+    public function editAction(string $t, int $id)
+    {
+        if (!$_SESSION['user']->canDo('edit_articles')) {
+            throw new \App\Exception\AccessDeniedException('Доступ запрещен!');
+        }
+
+        return new View(
+            'admin/post',
+            [
+                'title' => "Редактирование статьи",
+                'pageClass' => 'admin',
+                'article' => \App\Model\Post::find($id),
+                'type' => 'post'
+            ]
+        );
+    }
+
+    public function updateAction(string $t): View
     {
         if (!isset($_SESSION['user']) || !$_SESSION['user']->canDo('edit_articles')) {
             throw new AccessDeniedException('Доступ запрещен');
@@ -138,7 +160,7 @@ class ArticleController extends BaseController
         );
     }
 
-    public function unpublishAction(int $id)
+    public function unpublishAction(string $t, int $id)
     {
         if (!isset($_SESSION['user']) || !$_SESSION['user']->canDo('edit_articles')) {
             throw new AccessDeniedException('Доступ запрещен');
@@ -150,7 +172,7 @@ class ArticleController extends BaseController
         redirect($_SERVER['HTTP_REFERER']);
     }
 
-    public function publishAction(int $id)
+    public function publishAction(string $t, int $id)
     {
         if (!isset($_SESSION['user']) || !$_SESSION['user']->canDo('edit_articles')) {
             throw new AccessDeniedException('Доступ запрещен');
@@ -162,7 +184,7 @@ class ArticleController extends BaseController
         redirect($_SERVER['HTTP_REFERER']);
     }
 
-    public function softDeleteAction(int $id)
+    public function softDeleteAction(string $t, int $id)
     {
         if (!isset($_SESSION['user']) || !$_SESSION['user']->canDo('edit_articles')) {
             throw new AccessDeniedException('Доступ запрещен');
@@ -175,7 +197,7 @@ class ArticleController extends BaseController
         redirect($_SERVER['HTTP_REFERER']);
     }
 
-    public function restoreAction(int $id)
+    public function restoreAction(string $t, int $id)
     {
         if (!isset($_SESSION['user']) || !$_SESSION['user']->canDo('edit_articles')) {
             throw new AccessDeniedException('Доступ запрещен');
@@ -186,7 +208,7 @@ class ArticleController extends BaseController
         redirect($_SERVER['HTTP_REFERER']);
     }
 
-    public function forceDeleteAction(int $id)
+    public function forceDeleteAction(string $t, int $id)
     {
         if (!isset($_SESSION['user']) || !$_SESSION['user']->canDo('delete_articles')) {
             throw new AccessDeniedException('Доступ запрещен');

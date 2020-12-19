@@ -65,8 +65,8 @@ class UserController extends BaseController
 
     public function permissionsAction()
     {
-        if (!isset($_SESSION['user']) || !$_SESSION['user']->canDo('moderate_comments')) {
-            throw new \App\Exception\AccessDeniedException('Доступ запрещен!');
+        if (!$_SESSION['user']->canDo('edit_permissions')) {
+            throw new AccessDeniedException('Доступ запрещен!');
         }
 
         $data = Request::post();
@@ -81,7 +81,7 @@ class UserController extends BaseController
                 $role->permissions()->attach($permission);
             }
         }
-
+        $_SESSION['user'] = User::find($_SESSION['user']->id)->first();
         setSuccess('Права успешно обновлены');
         redirect('/admin/permissions');
     }
@@ -110,5 +110,36 @@ class UserController extends BaseController
 
 
         die('success');
+    }
+
+    public function viewPermissionsAction()
+    {
+        if (!$_SESSION['user']->canDo('edit_user')) {
+            throw new AccessDeniedException('Доступ запрещен!');
+        }
+
+        return new View(
+            'admin\permissions',
+            [
+                'title' => "Права",
+                'roles' => Role::with('permissions')->get(),
+                'permissions' => Permission::with('roles')->get(),
+            ]
+        );
+    }
+
+    public function editAction(int $id)
+    {
+        if (!$_SESSION['user']->canDo('edit_user')) {
+            throw new AccessDeniedException('Доступ запрещен');
+        }
+
+        $user = User::find($id);
+
+        if (!$user) {
+            throw new NotFoundException('Пользователь не найден');
+        }
+
+        return new View('profile', ['user' => $user]);
     }
 }

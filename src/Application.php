@@ -4,7 +4,6 @@ namespace App;
 
 use App\Traits\TSingleton;
 use App\View\Renderable;
-use App\View\View;
 use Illuminate\Database\Capsule\Manager as Capsule;
 
 class Application

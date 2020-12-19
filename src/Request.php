@@ -2,8 +2,6 @@
 
 namespace App;
 
-use App\Traits\TSingleton;
-
 class Request
 {
     /**
@@ -23,8 +21,6 @@ class Request
         }
         return false;
     }
-
-
 
     /**
      * Подготавливает данные от иньекции

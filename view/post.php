@@ -13,11 +13,12 @@
 
 <hr class="divider">
 
-<?php if ($type == 'post'): ?>
+<?php if ($article->type == 'post'): ?>
     <div class="comments">
         <?php includeView('layouts/comments/comments_list', ['article' => $article]); ?>
-
-        <?php includeView('layouts/comments/comment_form', ['article' => $article]); ?>
+        <?php if (isset($_SESSION['user'])){
+            includeView('layouts/comments/comment_form', ['article' => $article, 'errors' => $errors]);
+        } ?>
     </div>
 <?php endif; ?>
 

@@ -1,7 +1,5 @@
 <?php
 
-use JetBrains\PhpStorm\Pure;
-
 /**
  * Добавляет в сессию данные дебага, для последующего удобного вывода
  * @param mixed $var переменная
@@ -234,7 +232,6 @@ function printSuccess()
     }
 }
 
-
 /**
  * Пытается загрузить файл и в случае успеха возвращает массив с информацие по файлу, иначе возвращает false
  *
@@ -291,7 +288,6 @@ function humanFilesize($bytes, $decimals = 2): string
     $factor = floor((strlen($bytes) - 1) / 3);
     return sprintf("%.{$decimals}f", $bytes / pow(1024, $factor)) . @$sz[$factor];
 }
-
 
 /**
  * Оправляет Сообщение подписчику о новой статье

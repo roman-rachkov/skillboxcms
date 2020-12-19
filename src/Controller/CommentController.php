@@ -8,6 +8,8 @@ use App\Exception\NotFoundException;
 use App\Model\Comment;
 use App\Model\Post;
 use App\Request;
+use App\Validators\CommentValidator;
+use App\View\View;
 
 class CommentController extends BaseController
 {
@@ -24,22 +26,25 @@ class CommentController extends BaseController
 
         $data = Request::post();
 
-        if (empty($data['comment'])) {
-            throw new AccessDeniedException('Неверные данные отправки комментария');
+        $validator = new CommentValidator($data);
+
+        if ($validator->validate()) {
+            $comment = new Comment();
+            $comment->text = $data['comment'];
+            $comment->parent_id = $data['parent_id'] ?? null;
+            $comment->user_id = $_SESSION['user']->id;
+            $comment->moderated = $_SESSION['user']->hasRole(['administrator', 'moderator']);
+
+            if ($post->comments()->save($comment)) {
+                Comment::fixTree();
+                setSuccess('Комментарий успешно добавлен');
+                redirect($_SERVER['HTTP_REFERER']);
+            }
         }
 
-        $comment = new Comment();
-        $comment->text = $data['comment'];
-        $comment->parent_id = $data['parent_id'] ?? null;
-        $comment->user_id = $_SESSION['user']->id;
-        $comment->moderated = $_SESSION['user']->hasRole(['administrator', 'moderator']);
-
-        if ($post->comments()->save($comment)) {
-            Comment::fixTree();
-            setSuccess('Комментарий успешно добавлен');
-            redirect($_SERVER['HTTP_REFERER']);
-        }
+        return new View('post', ['article' => $post, 'errors' => $validator->errors()]);
     }
+
     public function editAction(int $id)
     {
         if ($id == null) {
@@ -48,26 +53,27 @@ class CommentController extends BaseController
 
         $data = Request::post();
 
-        if (empty($data['comment'])) {
-            throw new AccessDeniedException('Неверные данные отправки комментария');
+        $validator = new CommentValidator($data);
+
+        if ($validator->validate()) {
+            $comment = Comment::find($id);
+
+            if ($comment == null) {
+                throw new NotFoundException('Комментарий не найден или удален');
+            }
+
+            if ($comment->user->id != $_SESSION['user']->id && !$_SESSION['user']->canDo('edit_comment')) {
+                throw new AccessDeniedException('Нет прав на редактирование');
+            }
+
+            $comment->text = $data['comment'];
+            $comment->moderated = $_SESSION['user']->hasRole(['administrator', 'moderator']);
+
+            if ($comment->save()) {
+                setSuccess('Комментарий успешно обновлен');
+                redirect($_SERVER['HTTP_REFERER']);
+            }
         }
-
-        $comment = Comment::find($id);
-
-        if ($comment == null) {
-            throw new NotFoundException('Комментарий не найден или удален');
-        }
-
-        if ($comment->user->id != $_SESSION['user']->id && !$_SESSION['user']->canDo('edit_comment')) {
-            throw new AccessDeniedException('Нет прав на редактирование');
-        }
-
-        $comment->text = $data['comment'];
-        $comment->moderated = $_SESSION['user']->hasRole(['administrator', 'moderator']);
-
-        if ($comment->save()) {
-            setSuccess('Комментарий успешно обновлен');
-            redirect($_SERVER['HTTP_REFERER']);
-        }
+        return new View('post', ['article' => $post, 'errors' => $validator->errors()]);
     }
 }

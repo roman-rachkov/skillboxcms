@@ -1,6 +1,7 @@
 <?php includeView('layouts\header', ['title' => 'Профиль пользователя ' . $user->username, 'pageClass' => 'profile']); ?>
 
-<?= (isset($_SESSION['user']) && $_SESSION['user']->id == $user->id) || $_SESSION['user']->canDo('edit_user') ? '<form method="post" action="/profile/update" enctype="multipart/form-data">' : '' ?>
+<?= (isset($_SESSION['user']) && ($_SESSION['user']->id == $user->id || $_SESSION['user']->canDo('edit_user'))) ?
+                        '<form method="post" action="/profile/'.$user->id.'" enctype="multipart/form-data">' : '' ?>
     <div class="row">
         <div class="col s12 m4">
             <div class="wrp">
@@ -11,7 +12,7 @@
                 <?php endif; ?>
             </div>
 
-            <?php if ((isset($_SESSION['user']) && $_SESSION['user']->id == $user->id) || $_SESSION['user']->canDo('edit_user')): ?>
+            <?php if (isset($_SESSION['user']) && ($_SESSION['user']->id == $user->id || $_SESSION['user']->canDo('edit_user'))): ?>
                 <div class="file-field input-field">
                     <div class="btn">
                         <span>File</span>
@@ -24,7 +25,7 @@
             <?php endif; ?>
         </div>
         <div class="col s12 m8">
-            <?php if ((isset($_SESSION['user']) && $_SESSION['user']->id == $user->id) || $_SESSION['user']->canDo('edit_user')): ?>
+            <?php if (isset($_SESSION['user']) && ($_SESSION['user']->id == $user->id || $_SESSION['user']->canDo('edit_user'))): ?>
                 <div class="input-field">
                     <label for="login">Имя</label>
                     <input class="validate <?= isset($errors['username']) ? 'invalid' : '' ?>" type="text"
@@ -57,7 +58,7 @@
                 <?php else: ?>
                     <a href="/subscribe" class="btn subscribe">Подписаться</a>
                 <?php endif; ?>
-                <?= (isset($_SESSION['user']) && $_SESSION['user']->id == $user->id) || $_SESSION['user']->canDo('edit_user') ? '<button type="submit" class="btn waves-effect waves-light"><i class="material-icons left">sync</i>Обновить</button>' : '' ?>
+                <?= isset($_SESSION['user']) && ($_SESSION['user']->id == $user->id || $_SESSION['user']->canDo('edit_user')) ? '<button type="submit" class="btn waves-effect waves-light"><i class="material-icons left">sync</i>Обновить</button>' : '' ?>
             <?php else: ?>
 
             <h4><?=$user->username?></h4>
@@ -70,7 +71,7 @@
         </div>
 
     </div>
-<?= (isset($_SESSION['user']) && $_SESSION['user']->id == $user->id) || $_SESSION['user']->canDo('edit_user') ? '</form>' : '' ?>
+<?= isset($_SESSION['user']) && ($_SESSION['user']->id == $user->id || $_SESSION['user']->canDo('edit_user')) ? '</form>' : '' ?>
 
 
 <?php includeView('layouts\footer'); ?>

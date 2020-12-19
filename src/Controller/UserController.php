@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Exception\AccessDeniedException;
+use App\Exception\NotFoundException;
 use App\Model\Role;
 use App\Model\User;
 use App\Request;
@@ -39,6 +40,19 @@ class UserController extends BaseController
         } else {
             return new View('registration', ['request' => $request, 'title' => 'Регистрация нового пользователя', 'pageClass' => 'registration', 'errors' => $validator->errors()]);
         }
+    }
+
+    public function viewRegistrationAction(){
+        return new View('registration', ['title' => 'Регистрация нового пользователя', 'pageClass' => 'registration']);
+    }
+
+    public function logoutAction(){
+        session_destroy();
+        redirect();
+    }
+
+    public function viewLoginAction(){
+        return new App\View\View('login', ['title' => 'Вход на сайт', 'pageClass' => 'login']);
     }
 
     public function loginAction()
@@ -97,12 +111,12 @@ class UserController extends BaseController
         redirect($_SERVER['HTTP_REFERER']);
     }
 
-    public function updateAction()
+    public function updateAction(int $id = null)
     {
         if (!isset($_SESSION['user'])) {
             throw new AccessDeniedException('Доступ запрещен');
         }
-        $user = User::find($_SESSION['user']->id);
+        $user = User::find($id);
         $data = Request::post();
         $validator = new UserUpdateInfoValidator($data);
 
@@ -119,12 +133,24 @@ class UserController extends BaseController
 
             if ($user->save()) {
                 setSuccess('Данные успешно обновлены');
-                $_SESSION['user'] = $user;
+                if ($user->id == $_SESSION['user']->id) {
+                    $_SESSION['user'] = $user;
+                }
                 redirect($_SERVER['HTTP_REFERER']);
             } else {
                 setError('Что то пошло не так');
             }
         }
-        return new View('profile', ['errors' => $validator->errors(), 'request' => $data, 'user'=>$user]);
+        return new View('profile', ['errors' => $validator->errors(), 'request' => $data, 'user' => $user]);
+    }
+
+    public function profileAction(int $id = null)
+    {
+        $user = User::find($id) ?? ($_SESSION['user'] ?? null);
+        if (!$user) {
+            setError('Пожалуйста авторизуйтесь');
+            redirect('/login');
+        }
+        return new View('profile', ['user' => $user]);
     }
 }

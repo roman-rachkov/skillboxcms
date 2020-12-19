@@ -1,11 +1,10 @@
 <?php
 
-
 namespace App\Validators;
 
 use Valitron\Validator;
 
-class ArticleValidator implements iValidator
+class CommentValidator implements iValidator
 {
     protected $validator;
 
@@ -16,7 +15,7 @@ class ArticleValidator implements iValidator
 
     public function validate()
     {
-        $this->validator->rule('required', ['title', 'text'])->message('Поле не может быть пустым');
+        $this->validator->rule('required', ['comment'])->message('Поле не может быть пустым');
         return $this->validator->validate();
     }
 
@@ -24,4 +23,5 @@ class ArticleValidator implements iValidator
     {
         return $this->validator->errors();
     }
+
 }
